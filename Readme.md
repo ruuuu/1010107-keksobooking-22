@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Давлетова Руфина](https://up.htmlacademy.ru/javascript/22/user/1010107).
-* Наставник: `Неизвестно`.
+* Наставник: `Старчиков Павел`.
 
 ---
 
@@ -9,6 +9,7 @@ _Не удаляйте и не обращайте внимание на файл
 _`.editorconfig`, `.eslintrc`, `.gitattributes`, `.gitignore`, `package-lock.json`, `package.json`., `.github`_
 
 ---
+
 
 ### Памятка
 
