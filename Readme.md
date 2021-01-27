@@ -10,6 +10,7 @@ _`.editorconfig`, `.eslintrc`, `.gitattributes`, `.gitignore`, `package-lock.jso
 
 ---
 
+
 ### Памятка
 
 #### 1. Зарегистрируйтесь на Гитхабе
