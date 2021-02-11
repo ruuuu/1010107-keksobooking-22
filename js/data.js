@@ -116,6 +116,6 @@ const createOffer = () => {
 
 const similarOffers = new Array(COUNT_OFFERS).fill(null).map(() => createOffer());
 
-console.log(similarOffers); //массив объектов-объвлений
-//similarOffers();
+//console.log(similarOffers); //массив объектов-объвлений
+similarOffers();
 
