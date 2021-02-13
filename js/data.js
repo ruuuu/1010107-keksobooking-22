@@ -1,7 +1,7 @@
 //создаем данные:
 import { getFloatRandomNumber, randomInteger  } from './util.js';
 
-const COUNT_OFFERS = 30;
+const COUNT_OFFERS = 10; //1
 
 const OFFER_TITLE = [
   'Объявление 1',
@@ -10,7 +10,7 @@ const OFFER_TITLE = [
   'Объявление 4',
 ];
 
-const OFFER_TYPE = ['palace', 'flat', 'house ', 'bungalow'];
+const OFFER_TYPE = ['palace', 'flat', 'house', 'bungalow'];
 
 const OFFER_CHECK_IN = ['12:00', '13:00', '14:00'];
 
@@ -57,12 +57,14 @@ const createFeaturesArray = (array) => { // созадем массив стро
 
   for (let i = 0; i < countElems; i++) {
     //console.log('randomInteger(OFFER_FEATURES.length)  equal', randomInteger(OFFER_FEATURES.length));
-    mas[i] = array[randomInteger(array.length) - 1]; // индекк [1,6]
+    mas[i] = array[randomInteger(array.length) - 1]; // индекк [1,6] 
   }
 
   //console.log('mas', mas);
 
   let mas1 = DeleteRepeatElemsFromArray(mas);
+
+  //mas1 = mas1.join(', '); //чтоб элементы не слипались, строка
 
   return mas1;
 };
@@ -77,7 +79,7 @@ const createAuthorOffer = () => {
 //console.log(createAuthorOffer());
 
 
-const createInfoOffer = () => {
+const createInfoOffer = () => {  //offer:{}
   return {
     title: OFFER_TITLE[randomInteger(OFFER_TITLE.length - 1)],
     address: getFloatRandomNumber(5.90, 45.90, 3) + ', ' + getFloatRandomNumber(1.90, 10.90, 3),
@@ -90,6 +92,7 @@ const createInfoOffer = () => {
     features: createFeaturesArray(OFFER_FEATURES), //массив строк
     description: 'Описание помещения',
     photos: createFeaturesArray(OFFER_PHOTOS), //массив строк
+    
   };
 };
 //console.log(createInfoOffer());
@@ -114,8 +117,11 @@ const createOffer = () => {
 //console.log(createOffer());
 
 
-const similarOffers = new Array(COUNT_OFFERS).fill(null).map(() => createOffer());
+const createOffers = () => new Array(COUNT_OFFERS).fill(null).map(() => createOffer()); //создаем массив [null, null, null], [null, null, null].map(() => createOffer()) //
 
-//console.log(similarOffers); //массив объектов-объвлений
-similarOffers();
+//console.log('массив объявлений ', createOffers()); //массив объектов-объявлений
+
+
+
+export{ createOffers }; 
 
