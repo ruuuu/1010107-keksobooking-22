@@ -101,7 +101,7 @@ const card = cardTemplate.querySelector('.popup'); //карточка объяв
 //console.log(card);
 
 const similarOffers = createOffers(); // [{},{},{}]
-console.log('массив объявлений ', similarOffers); //массив объектов-объявлений
+//console.log('массив объявлений ', similarOffers); //массив объектов-объявлений
 
 
 const similarListFragment = document.createDocumentFragment(); //корбка куда будем складвать оферы
