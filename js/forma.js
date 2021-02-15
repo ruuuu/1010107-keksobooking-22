@@ -16,21 +16,25 @@ selectType.addEventListener('change', () => { // вешаем обработчи
   priceField.setAttribute('max', '1000000');
 
   if(selectType.value === 'flat'){
+    priceField.value = ' '; // очищаем от предыдущего значения
     priceField.setAttribute('min', '1000');
     priceField.setAttribute('placeholder', '1000');
   }
 
   if(selectType.value === 'bungalow'){
+    priceField.value = ' ';
     priceField.setAttribute('min', '0');
     priceField.setAttribute('placeholder', '0');
   }
 
   if(selectType.value === 'house'){
+    priceField.value = ' ';
     priceField.setAttribute('min', '5000');
     priceField.setAttribute('placeholder', '5000');
   }
 
   if(selectType.value === 'palace'){
+    priceField.value = ' ';
     priceField.setAttribute('min', '10000');
     priceField.setAttribute('placeholder', '10000');
   }
