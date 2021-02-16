@@ -25,29 +25,9 @@ selectType.addEventListener('change', (evt) => { // вешаем обработ�
 
   priceField.setAttribute('max', '1000000');
 
-  if(selectType.value === 'flat') {
-    priceField.value = ' '; // очищаем от предыдущего значения
-    priceField.setAttribute('min', MIN_PRICES[evt.target.value]);
-    priceField.setAttribute('placeholder', MIN_PRICES[evt.target.value]);
-  }
-
-  if(selectType.value === 'bungalow') {
-    priceField.value = ' ';
-    priceField.setAttribute('min', MIN_PRICES[evt.target.value]);
-    priceField.setAttribute('placeholder', MIN_PRICES[evt.target.value]);
-  }
-
-  if(selectType.value === 'house') {
-    priceField.value = ' ';
-    priceField.setAttribute('min', MIN_PRICES[evt.target.value]);
-    priceField.setAttribute('placeholder', MIN_PRICES[evt.target.value]);
-  }
-
-  if(selectType.value === 'palace') {
-    priceField.value = ' ';
-    priceField.setAttribute('min', MIN_PRICES[evt.target.value]);
-    priceField.setAttribute('placeholder', MIN_PRICES[evt.target.value]);
-  }
+  priceField.value = ' '; // очищаем от предыдущего значения
+  priceField.setAttribute('min', MIN_PRICES[evt.target.value]);
+  priceField.setAttribute('placeholder', MIN_PRICES[evt.target.value]);
 
 });
 
@@ -56,17 +36,12 @@ selectCheckIn.addEventListener('change', (evt) => { // вешаем обрабо
   // console.log(evt.target); // выведет разметку списка
   // console.log(evt.target.value); // '14:00'
 
-  if(selectCheckIn.value === evt.target.value) {
-    selectCheckOut.value = evt.target.value;
-  }
-  
+  selectCheckOut.value = evt.target.value;
+
 });
 
 
 selectCheckOut.addEventListener('change', (evt) => { // вешаем обработчик на список Выезд
-
-  if(selectCheckOut.value === evt.target.value){
-    selectCheckIn.value = evt.target.value;
-  }
-
+  selectCheckIn.value = evt.target.value;
+  
 });
