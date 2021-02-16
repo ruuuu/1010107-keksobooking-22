@@ -1,3 +1,10 @@
+const MIN_PRICES =  {
+  'bungalow': 0,
+  'flat': 1000,
+  'house': 5000,
+  'palace': 10000,
+};
+
 const forma = document.querySelector('.ad-form'); // форма
 
 const priceField = forma.querySelector('#price'); // поле Цена за ночь
@@ -10,68 +17,56 @@ const selectCheckOut = forma.querySelector('#timeout'); // список Выез
 
 
 
-selectType.addEventListener('change', () => { // вешаем обработчик на список Тип жилья
 
-  //console.log('элемент выбран');
+selectType.addEventListener('change', (evt) => { // вешаем обработчик на список Тип жилья
+
+  //console.log(evt.target); // выведет разметку списка
+  //console.log(evt.target.value); // <option value="flat"> </option>само значение 'flat' , 'house', 'washer'
+
   priceField.setAttribute('max', '1000000');
 
-  if(selectType.value === 'flat'){
+  if(selectType.value === 'flat') {
     priceField.value = ' '; // очищаем от предыдущего значения
-    priceField.setAttribute('min', '1000');
-    priceField.setAttribute('placeholder', '1000');
+    priceField.setAttribute('min', MIN_PRICES[evt.target.value]);
+    priceField.setAttribute('placeholder', MIN_PRICES[evt.target.value]);
   }
 
-  if(selectType.value === 'bungalow'){
+  if(selectType.value === 'bungalow') {
     priceField.value = ' ';
-    priceField.setAttribute('min', '0');
-    priceField.setAttribute('placeholder', '0');
+    priceField.setAttribute('min', MIN_PRICES[evt.target.value]);
+    priceField.setAttribute('placeholder', MIN_PRICES[evt.target.value]);
   }
 
-  if(selectType.value === 'house'){
+  if(selectType.value === 'house') {
     priceField.value = ' ';
-    priceField.setAttribute('min', '5000');
-    priceField.setAttribute('placeholder', '5000');
+    priceField.setAttribute('min', MIN_PRICES[evt.target.value]);
+    priceField.setAttribute('placeholder', MIN_PRICES[evt.target.value]);
   }
 
-  if(selectType.value === 'palace'){
+  if(selectType.value === 'palace') {
     priceField.value = ' ';
-    priceField.setAttribute('min', '10000');
-    priceField.setAttribute('placeholder', '10000');
+    priceField.setAttribute('min', MIN_PRICES[evt.target.value]);
+    priceField.setAttribute('placeholder', MIN_PRICES[evt.target.value]);
   }
 
 });
 
 
-selectCheckIn.addEventListener('change', () => { // вешаем событие на список Заезд
+selectCheckIn.addEventListener('change', (evt) => { // вешаем обработчик на список Заезд
+  // console.log(evt.target); // выведет разметку списка
+  // console.log(evt.target.value); // '14:00'
 
-  if(selectCheckIn.value === '12:00'){
-    selectCheckOut.value = '12:00';
+  if(selectCheckIn.value === evt.target.value) {
+    selectCheckOut.value = evt.target.value;
   }
-
-  if(selectCheckIn.value === '13:00'){
-    selectCheckOut.value = '13:00';
-  }
-
-  if(selectCheckIn.value === '14:00'){
-    selectCheckOut.value = '14:00';
-  }
-
+  
 });
 
 
+selectCheckOut.addEventListener('change', (evt) => { // вешаем обработчик на список Выезд
 
-selectCheckOut.addEventListener('change', () => { // вешаем событие на список Выезд
-
-  if(selectCheckOut.value === '12:00'){
-    selectCheckIn.value = '12:00';
-  }
-
-  if(selectCheckOut.value === '13:00'){
-    selectCheckIn.value = '13:00';
-  }
-
-  if(selectCheckOut.value === '14:00'){
-    selectCheckIn.value = '14:00';
+  if(selectCheckOut.value === evt.target.value){
+    selectCheckIn.value = evt.target.value;
   }
 
 });
