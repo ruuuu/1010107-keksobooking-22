@@ -84,7 +84,7 @@ fieldset {
 }
 
 .map__canvas {
-  display: flex;
+  /*display: flex;
   /*времено, чтоб все объявленяи увидеть*/
   width: 100%;
   height: 500px;
