@@ -1,7 +1,7 @@
 //создаем данные:
 import { getFloatRandomNumber, randomInteger  } from './util.js';
 
-const COUNT_OFFERS = 10; //1
+const COUNT_OFFERS = 10; //10
 
 const OFFER_TITLE = [
   'Объявление 1',
@@ -119,7 +119,7 @@ const createOffer = () => {
 
 const createOffers = () => new Array(COUNT_OFFERS).fill(null).map(() => createOffer()); //создаем массив [null, null, null], [null, null, null].map(() => createOffer()) //
 
-//console.log('массив объявлений ', createOffers()); //массив объектов-объявлений
+//console.log('массив объявлений ', createOffers()); //массив объектов-объявлений [{},{},{}]
 
 
 

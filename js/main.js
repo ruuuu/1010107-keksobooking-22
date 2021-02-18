@@ -1,4 +1,5 @@
 //точка входа:
 import './data.js';
-import './popup.js';
+import './similar-list.js';
 import './forma.js';
+import './map.js';
