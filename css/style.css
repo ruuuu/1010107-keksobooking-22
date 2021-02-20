@@ -394,6 +394,30 @@ fieldset {
   box-shadow: 0 0 2px 2px #ff6547;
 }
 
+/*сама добавила*/
+.border_for-error {
+  border: 2px solid #000099;
+
+  outline: none;
+
+}
+
+.border_for-error:hover {
+  border: 2px solid #000099;
+
+  outline: none;
+
+}
+
+.border_for-error:focus {
+  outline: none;
+  border: 2px solid #000099;
+  -webkit-box-shadow: 0 0 2px 2px #000099;
+  box-shadow: 0 0 2px 2px #000099;
+}
+
+
+
 .ad-form__element--time {
   -ms-flex-preferred-size: 50%;
   flex-basis: 50%;
