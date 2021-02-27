@@ -1,9 +1,9 @@
 import { createFeatureElements, createPhotoElements, createTypeElem } from './similar-list.js';
 import { forma, clearFields, addressField } from './forma.js';
-import { escKeyPress,  mouseDownPress } from './modal.js';
+import { onEscKeyPress,  onMouseDownPress } from './modal.js';
 
-document.removeEventListener('keydown', escKeyPress); // снимаем обработчик когда нет сообщеий
-document.removeEventListener('mousedown',  mouseDownPress); // снимаем обработчик когда нет сообщеий
+document.removeEventListener('keydown', onEscKeyPress); // снимаем обработчик когда нет сообщеий
+document.removeEventListener('mousedown',  onMouseDownPress); // снимаем обработчик когда нет сообщеий
 
 
 /* global L:readonly */

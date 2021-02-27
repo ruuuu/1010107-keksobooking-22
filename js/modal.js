@@ -6,7 +6,7 @@ const isEscEvent = (evt) => {
 };
 
 
-const escKeyPress = (evt) => {
+const onEscKeyPress = (evt) => {
 
   if (isEscEvent(evt)) {
     //console.log('нажали клавишу esc');
@@ -26,7 +26,7 @@ const escKeyPress = (evt) => {
 };
 
 
-const mouseDownPress = () => {
+const onMouseDownPress = () => {
   //console.log('нажали на ппоизвольню область');
   const errorElement = document.querySelector('.error');
   const successElement = document.querySelector('.success');
@@ -50,8 +50,8 @@ const successAlert = () => { // сообщение об успехе
 
   mainElement.append(successElement); // дбоавляем сообщеие в mainElement
 
-  document.addEventListener('keydown', escKeyPress); // нажатие на esc в соообщении
-  document.addEventListener('mousedown',  mouseDownPress); // нажатие на любую область в соообщении
+  document.addEventListener('keydown', onEscKeyPress); // нажатие на esc в соообщении
+  document.addEventListener('mousedown',  onMouseDownPress); // нажатие на любую область в соообщении
 
 
   setTimeout(() => {
@@ -79,8 +79,8 @@ const errorAlert = () => { // если данные не загрузились,
   });
 
 
-  document.addEventListener('keydown', escKeyPress);  // нажатие на esc в соообщении
-  document.addEventListener('mousedown',  mouseDownPress); //  нажатие на любую область в соообщении
+  document.addEventListener('keydown', onEscKeyPress);  // нажатие на esc в соообщении
+  document.addEventListener('mousedown',  onMouseDownPress); //  нажатие на любую область в соообщении
 
 
   setTimeout(() => {
@@ -91,4 +91,4 @@ const errorAlert = () => { // если данные не загрузились,
 };
 
 
-export { successAlert, errorAlert, escKeyPress, mouseDownPress };
+export { successAlert, errorAlert, onEscKeyPress, onMouseDownPress };
