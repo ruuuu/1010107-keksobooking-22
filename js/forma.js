@@ -1,5 +1,5 @@
 import { sendData } from './api.js';
-import {successAlert, errorAlert} from './modal.js';
+import { successAlert, errorAlert } from './modal.js';
 
 
 const MIN_PRICES =  {

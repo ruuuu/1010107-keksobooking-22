@@ -4,6 +4,7 @@ import { showAlert } from './util.js';
 import { recreateMarker } from './map.js';
 
 
+
 const getData = () => {
 
   fetch('https://22.javascript.pages.academy/keksobooking/data?limit=100') // сервер

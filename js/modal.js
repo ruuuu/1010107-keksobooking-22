@@ -1,5 +1,47 @@
 const mainElement = document.querySelector('main');
 
+
+const isEscEvent = (evt) => {
+  return evt.key === ('Escape' || 'Esc');
+};
+
+
+const escKeyPress = (evt) => {
+
+  if (isEscEvent(evt)) {
+    //console.log('нажали клавишу esc');
+
+    evt.preventDefault();
+
+    const successElement = document.querySelector('.success');
+    const errorElement = document.querySelector('.error');
+
+    if(successElement){
+      successElement.classList.add('hidden');
+    }
+    else if(errorElement){
+      errorElement.classList.add('hidden');
+    }
+  }
+};
+
+
+const mouseDownPress = () => {
+  //console.log('нажали на ппоизвольню область');
+  const errorElement = document.querySelector('.error');
+  const successElement = document.querySelector('.success');
+
+  if(successElement){
+    successElement.classList.add('hidden');
+  }
+  else if(errorElement){
+    errorElement.classList.add('hidden');
+  }
+};
+
+
+
+
 const successAlert = () => { // сообщение об успехе
 
   const successTemplate = document.querySelector('#success').content;
@@ -8,10 +50,15 @@ const successAlert = () => { // сообщение об успехе
 
   mainElement.append(successElement); // дбоавляем сообщеие в mainElement
 
+  document.addEventListener('keydown', escKeyPress); // нажатие на esc в соообщении
+  document.addEventListener('mousedown',  mouseDownPress); // нажатие на любую область в соообщении
+
 
   setTimeout(() => {
     successElement.remove(); // убираем сообщение
   }, 4000); // на 4 сек показывает сообщение
+
+
 
 };
 
@@ -32,66 +79,16 @@ const errorAlert = () => { // если данные не загрузились,
   });
 
 
+  document.addEventListener('keydown', escKeyPress);  // нажатие на esc в соообщении
+  document.addEventListener('mousedown',  mouseDownPress); //  нажатие на любую область в соообщении
+
+
   setTimeout(() => {
     errorElement.remove();
   }, 4000);
 
+
 };
 
 
-
-const isEscEvent = (evt) => {
-  return evt.key === ('Escape' || 'Esc');
-};
-
-
-const escKeyPress = (evt) => {
-
-  //console.log('перед if');
-  if (isEscEvent(evt)) {
-    //console.log('нажали на клаваишу esc');
-    evt.preventDefault();
-
-    const successElement = document.querySelector('.success');
-    const errorElement = document.querySelector('.error');
-
-    if(successElement){
-      successElement.classList.add('hidden');
-    }
-    else if(errorElement){
-      errorElement.classList.add('hidden');
-    }
-  }
-};
-
-document.addEventListener('keydown',  (evt) => { // нажатие на esc в соообщении
-  escKeyPress(evt);
-});
-
-
-document.removeEventListener('keydown', (evt) => { // снимаем обработчик когда нет сообщеий
-  escKeyPress(evt);
-});
-
-
-const mouseDownPress = () => {
-  const errorElement = document.querySelector('.error');
-  const successElement = document.querySelector('.success');
-
-  if(successElement){
-    successElement.classList.add('hidden');
-  }
-  else if(errorElement){
-    errorElement.classList.add('hidden');
-  }
-};
-
-document.addEventListener('mousedown',  () => { // нажатие на любую область в соообщении
-  mouseDownPress();
-});
-
-document.removeEventListener('mousedown',  () => {
-  mouseDownPress();
-});
-
-export { successAlert, errorAlert };
+export { successAlert, errorAlert, escKeyPress, mouseDownPress };
