@@ -1,3 +1,7 @@
+import { sendData } from './api.js';
+import {successAlert, errorAlert} from './modal.js';
+
+
 const MIN_PRICES =  {
   'bungalow': 0,
   'flat': 1000,
@@ -33,11 +37,17 @@ const selectRoomsNumber = forma.querySelector('#room_number'); // Список �
 
 const selectCapacity = forma.querySelector('#capacity'); // Список Кол-во гостей(мест)
 
+const descriptionField = forma.querySelector('#description'); // Описание
+
+const featuresFields = forma.querySelectorAll('.feature__checkbox'); // список чекбоксов
+
+
 addressField.readOnly = true; // нередактируемое поле
 
 // нач состояние
-priceField.setAttribute('placeholder', '1000');
-priceField.setAttribute('min', MIN_PRICES['flat']); // MIN_PRICES['flat']
+priceField.setAttribute('placeholder', MIN_PRICES['flat']);
+priceField.setAttribute('min', MIN_PRICES['flat']);
+
 
 //нач состояние:
 selectCapacity.options[0].disabled = true;
@@ -75,30 +85,8 @@ const toggledForms = () => {
 // };
 
 
-selectType.addEventListener('change', (evt) => { // Тип жилья
-  //console.log(evt.target); // выведет разметку списка
-  //console.log(evt.target.value); // <option value="flat"> </option>само значение 'flat' , 'house', 'washer'
 
-  priceField.setAttribute('max', '1000000');
-  priceField.value = ' '; // очищаем от предыдущего значения
-  priceField.setAttribute('min', MIN_PRICES[evt.target.value]); // MIN_PRICES['flat']
-  priceField.setAttribute('placeholder', MIN_PRICES[evt.target.value]);
-});
-
-
-selectCheckIn.addEventListener('change', (evt) => { // вешаем обработчик на список Заезд
-  selectCheckOut.value = evt.target.value;
-});
-
-
-selectCheckOut.addEventListener('change', (evt) => { // вешаем обработчик на список Выезд
-  selectCheckIn.value = evt.target.value;
-});
-
-
-
-selectRoomsNumber.addEventListener('change', (evt) => { //  вешаем обработчик на список Кол-во комнат
-
+const onValidateCountRooms = (evt) => { // фукнция обработчик для колва комнат
   selectCapacity.options[0].disabled = false; // раздизейбливаем предыдущие значения
   selectCapacity.options[1].disabled = false;
   selectCapacity.options[2].disabled = false;
@@ -129,12 +117,14 @@ selectRoomsNumber.addEventListener('change', (evt) => { //  вешаем обр�
     selectCapacity.options[1].disabled = true;
     selectCapacity.options[2].disabled = true;
   }
-});
+
+};
 
 
 
-selectCapacity.addEventListener('change', (evt) => { //  вешаем обработчик на список Кол-во гостей
 
+
+const onValidateCountGuests = (evt) => { //фукнция-обработчки для списка Кол-во гостей
   //selectCapacity.value = evt.target.value;
   //console.log('selectCapacity.value = ' , selectCapacity.value);
 
@@ -163,11 +153,11 @@ selectCapacity.addEventListener('change', (evt) => { //  вешаем обраб
     selectRoomsNumber.options[1].disabled = true;
     selectRoomsNumber.options[2].disabled = true;
   }
+};
 
-});
 
 
-titleField.addEventListener('invalid', () => { // событие произойдет если в  поле ввели некорретное значние после того как нажмешь на кноку Отправить
+const onValidateTitleField = () => { // функция обработчика, для поля Название отеля
   //console.log(titleField.validity);
 
   if (titleField.validity.tooShort) {
@@ -188,11 +178,22 @@ titleField.addEventListener('invalid', () => { // событие произой�
     titleField.setCustomValidity(''); // сбрасываем ошибку, когда уже ввели корреткное значение
     titleField.classList.remove('border_for-error');
   }
-});
+};
 
 
-priceField.addEventListener('invalid', () => {
+const onValidateSelectType = (evt) => { // фкнуия обработчик Тип жилья
+  //console.log(evt.target); // выведет разметку списка
+  //console.log(evt.target.value); // <option value="flat"> </option>само значение 'flat' , 'house', 'washer'
 
+  priceField.setAttribute('max', '1000000');
+  priceField.value = ''; // очищаем от предыдущего значения
+  priceField.setAttribute('min', MIN_PRICES[evt.target.value]); // MIN_PRICES['flat']
+  priceField.setAttribute('placeholder', MIN_PRICES[evt.target.value]);
+};
+
+
+
+const onValidatePriceField = () => { // фукнция обработчкиа для поля Цена
   //console.log('MIN_PRICES[flat] = ', MIN_PRICES['flat']);
 
   if(priceField.value < MIN_PRICES['bungalow']){
@@ -219,17 +220,83 @@ priceField.addEventListener('invalid', () => {
     priceField.classList.remove('border_for-error');
     priceField.setCustomValidity('');
   }
+};
+
+
+
+titleField.addEventListener('invalid', onValidateTitleField); //событие произойдет если в  поле ввели некорретное значние после того как нажмешь на кноку Отправить
+
+selectType.addEventListener('change', onValidateSelectType);  // Тип жилья
+
+priceField.addEventListener('invalid', onValidatePriceField); // вешаем обработчик на поле Цена
+
+selectRoomsNumber.addEventListener('change', onValidateCountRooms); //  вешаем обработчик на список Кол-во комнат
+
+selectCapacity.addEventListener('change', onValidateCountGuests); // вешаем обработчик на список Кол-во гостей
+
+selectCheckIn.addEventListener('change', (evt) => { // вешаем обработчик на список Заезд
+  selectCheckOut.value = evt.target.value;
+});
+
+selectCheckOut.addEventListener('change', (evt) => { // вешаем обработчик на список Выезд
+  selectCheckIn.value = evt.target.value;
 });
 
 
+const clearFields = () => {
 
-forma.addEventListener('submit', () => {
-  //evt.preventDefault(); // чтоб не редиректило на др страницу
+  titleField.value = ''; // очищаем
 
-});
+  selectType.options[1].selected = true; // Квартира
+  // нач состояние
+  priceField.setAttribute('placeholder', '1000');
+  priceField.setAttribute('min', MIN_PRICES['flat']); // MIN_PRICES['flat']
+  priceField.value = '';
 
+  selectRoomsNumber.options[0].selected = true; // 1 комната
+  selectCapacity.options[2].selected = true; // на 1 гостя
+
+  selectCheckIn.options[0].selected = true; // 12:00
+  selectCheckOut.options[0].selected = true; // 12:00
+  descriptionField.value = '';
+
+  featuresFields.forEach((feature) => { // снимам галочки с чекбоксов
+    feature.checked = false;
+  })
+
+  selectRoomsNumber.options[0].disabled = false; // раздизейбливаем предыдущие значения
+  selectRoomsNumber.options[1].disabled = false;
+  selectRoomsNumber.options[2].disabled = false;
+  selectRoomsNumber.options[3].disabled = false;
+
+  selectCapacity.options[0].disabled = false; // раздизейбливаем предыдущие значения
+  selectCapacity.options[1].disabled = false;
+  selectCapacity.options[2].disabled = false;
+  selectCapacity.options[3].disabled = false;
+
+};
+
+
+const setUserFormSubmit = () => {
+
+  forma.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    //вызов функции:
+    sendData(
+      () => successAlert(),
+      () => errorAlert(),
+      new FormData(evt.target), // body
+    );
+
+  });
+
+};
+
+setUserFormSubmit();
 //toggledForms();
 
 
 
-export { toggledForms };
+export { toggledForms, setUserFormSubmit, forma, clearFields, addressField };
+
+

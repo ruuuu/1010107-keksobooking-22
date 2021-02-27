@@ -1,7 +1,7 @@
 //создаем данные:
 import { getFloatRandomNumber, randomInteger  } from './util.js';
 
-const COUNT_OFFERS = 10; //10
+const COUNT_OFFERS = 100; //10
 
 const OFFER_TITLE = [
   'Объявление 1',
@@ -57,7 +57,7 @@ const createFeaturesArray = (array) => { // созадем массив стро
 
   for (let i = 0; i < countElems; i++) {
     //console.log('randomInteger(OFFER_FEATURES.length)  equal', randomInteger(OFFER_FEATURES.length));
-    mas[i] = array[randomInteger(array.length) - 1]; // индекк [1,6] 
+    mas[i] = array[randomInteger(array.length) - 1]; // индекк [1,6]
   }
 
   //console.log('mas', mas);
@@ -92,7 +92,7 @@ const createInfoOffer = () => {  //offer:{}
     features: createFeaturesArray(OFFER_FEATURES), //массив строк
     description: 'Описание помещения',
     photos: createFeaturesArray(OFFER_PHOTOS), //массив строк
-    
+
   };
 };
 //console.log(createInfoOffer());
@@ -123,5 +123,5 @@ const createOffers = () => new Array(COUNT_OFFERS).fill(null).map(() => createOf
 
 
 
-export{ createOffers }; 
+export{ createOffers };
 
