@@ -1,6 +1,6 @@
 import { sendData } from './api.js';
 import { successAlert, errorAlert } from './modal.js';
-
+import { recreateMarker } from './map.js';
 
 const MIN_PRICES =  {
   'bungalow': 0,
@@ -287,10 +287,15 @@ const setUserFormSubmit = () => {
       () => errorAlert(),
       new FormData(evt.target), // body
     );
-
   });
-
 };
+
+
+forma.addEventListener('reset', () => { // Нажатие на кноку Очистить
+  //console.log('нажали на кнопку сброса');
+  clearFields(); // очистка полей
+  recreateMarker();
+});
 
 setUserFormSubmit();
 //toggledForms();

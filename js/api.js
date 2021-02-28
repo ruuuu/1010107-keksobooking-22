@@ -34,7 +34,7 @@ const sendData = (successAlert, errorAlert, body) => {
 
   // для отправки формы метод POST:
   fetch(
-    'https://22.javascript.pages.academy/keksobooking', // отправляем json сюда
+    'https://22.javascript.pages.academy/keksobooking1', // отправляем json сюда
     {
       method: 'POST',
       body,

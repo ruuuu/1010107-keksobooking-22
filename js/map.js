@@ -148,10 +148,6 @@ const recreateMarker = () => {
 };
 
 
-forma.addEventListener('reset', () => { // Нажатие на кноку Очистить
-  //console.log('нажали на кнопку сброса');
-  clearFields(); // очистка полей
-  recreateMarker();
-});
+
 
 export { createListOffers, recreateMarker };
