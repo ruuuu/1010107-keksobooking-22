@@ -1,5 +1,5 @@
 import { createFeatureElements, createPhotoElements, createTypeElem } from './similar-list.js';
-import { forma, clearFields, addressField } from './forma.js';
+import { addressField } from './forma.js';
 import { onEscKeyPress,  onMouseDownPress } from './modal.js';
 
 document.removeEventListener('keydown', onEscKeyPress); // снимаем обработчик когда нет сообщеий
