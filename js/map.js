@@ -141,39 +141,10 @@ mainPinMarker.addEventListener('dragover', () => { // событие dragover, �
 });
 
 
-const mainPinMarker1 = L.marker(  // создаем главную метку
-  {
-    lat: 35.70, //mainPinMarker.getLatLng().lat, // центр токио
-    lng: 139.425, //mainPinMarker.getLatLng().lng,
-  },
-  {
-    draggable: true,
-    icon: mainPinIcon,
-  },
-);
 
-const recreateMarker = () => { // пересоздаем метку
-
-  mainPinMarker.remove();
-
-  //console.log(mainPinMarker1.getLatLng().lat, mainPinMarker1.getLatLng().lng);
-
-  mainPinMarker1.addTo(map);
-  //console.log('mainPinMarker1.lat ', mainPinMarker1.getLatLng().lat, 'mainPinMarker1.lng ', mainPinMarker1.getLatLng().lng);
-
-  addressField.value = `${mainPinMarker1.getLatLng().lat}, ${mainPinMarker1.getLatLng().lng}`;
-
-  mainPinMarker1.addEventListener('dragstart', (evt) => {
-    const cooords = evt.target.getLatLng();
-    //console.log('cooords ', cooords);
-    addressField.value = `${cooords.lat.toFixed(5)}, ${cooords.lng.toFixed(5)}`;
-  });
-
-  mainPinMarker1.addEventListener('dragend', (evt) => {
-    const cooords = evt.target.getLatLng();
-    addressField.value = `${cooords.lat.toFixed(5)}, ${cooords.lng.toFixed(5)}`;
-  });
-
+const recreateMarker = () => {
+  mainPinMarker.setLatLng({lat: 35.70, lng: 139.425});
+  addressField.value = `${mainPinMarker.getLatLng().lat}, ${mainPinMarker.getLatLng().lng}`;
 };
 
 
@@ -181,9 +152,6 @@ forma.addEventListener('reset', () => { // Нажатие на кноку Очи
   //console.log('нажали на кнопку сброса');
   clearFields(); // очистка полей
   recreateMarker();
-
-  // console.log('mainPinMarker1.getLatLng().lat', mainPinMarker1.getLatLng().lat, 'mainPinMarker1.getLatLng().lng', mainPinMarker1.getLatLng().lng);
-  addressField.value = `${mainPinMarker1.getLatLng().lat}, ${mainPinMarker1.getLatLng().lng}`;
 });
 
 export { createListOffers, recreateMarker };
