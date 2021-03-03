@@ -61,8 +61,10 @@ const createCustomPopup = (offer_elem) => { // передаем объект-о�
 
 // const similarOffers = createOffers(); //  выдаст [{},{},{}]
 
-const createListOffers = (offers) => { // в fetch вызываем ее
+//привязка балуна к метке:
+const createListOffers = (offers) => { // передаем серверные объявления, в fetch вызываем ее
 
+  //console.log('offers = ', offers);
   // [{},{},{}] берем с  сервера
   offers.forEach((elem) => { // передаем объект elem = {author, offer, location}
     const { location } = elem;
@@ -84,7 +86,7 @@ const createListOffers = (offers) => { // в fetch вызываем ее
     );
 
     pinMarker.addTo(map);  // добавляем обычную метку на карту
-
+    //                      offer
     pinMarker.bindPopup(createCustomPopup(elem)); // передаем {author, offer, location}, при нажатии на метку, вернет разметку объявления
 
   }); // forEach()

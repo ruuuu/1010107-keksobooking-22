@@ -277,6 +277,37 @@ const clearFields = () => {
 };
 
 
+
+
+const filtersForma = document.querySelector('.map__filters');
+
+const typeSelect = filtersForma.querySelector('#housing-type'); // Тип жилья
+
+
+const setTypeHouseClick = (сb) => { //при выборе Тип жилья, будет вызываться cb() = createListOffers(sortListSlice)
+
+  typeSelect.addEventListener('change', (evt) => {
+    //debugger;
+
+    //console.log('нажали на список');
+
+    typeSelect.value = evt.target.value; // сохраняем то, что выбрали из списка
+    //console.log('typeSelect.value = ', typeSelect.value); // 'flat'
+    //console.log('evt.target.value = ', evt.target.value); //
+
+
+    //console.log('cb() = ', cb());
+    сb(); // вызваем createListOffers(sortListSlice)
+  });
+
+};
+
+
+
+
+
+
+
 const setUserFormSubmit = () => {
 
   forma.addEventListener('submit', (evt) => {
@@ -302,6 +333,6 @@ setUserFormSubmit();
 
 
 
-export { toggledForms, setUserFormSubmit, forma, clearFields, addressField };
+export { toggledForms, setUserFormSubmit, forma, clearFields, addressField, setTypeHouseClick };
 
 
