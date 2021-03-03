@@ -1,14 +1,14 @@
 import { clearFields } from './forma.js';
-import { createListOffers } from './map.js';
+import { createListOffers, recreateMarker } from './map.js';
 import { showAlert } from './util.js';
-import { recreateMarker } from './map.js';
 
-
+let offerss = [];
 
 const getData = () => {
 
   fetch('https://22.javascript.pages.academy/keksobooking/data?limit=100') // сервер
     .then((response) => {
+      //console.log('response = ', response);
       if(response.ok) {  // если ответ пришел
         //console.log('Данные получены с сервера');
         return response.json(); // получиили список объектов с сервера [{},{},{},{}]
@@ -23,10 +23,21 @@ const getData = () => {
     })
     .then((offers) => { // передаем список серверных объявлений [{},{},{}]
       //console.log('offers ', offers);
+      offerss = offers; // серверные объявления
+
       createListOffers(offers); // вызов функции
+
+
+      // const filteredListOffers = getFiltredOffers(offers); // отфильтрованный список оферов
+      // console.log('filteredListOffers ', filteredListOffers);
+
+      //setTypeHouseClick(() => createListOffers(offers)); // передаем  отфильтрованный список оферов
+
     });
 
 };
+
+
 
 
 
@@ -34,7 +45,7 @@ const sendData = (successAlert, errorAlert, body) => {
 
   // для отправки формы метод POST:
   fetch(
-    'https://22.javascript.pages.academy/keksobooking1', // отправляем json сюда
+    'https://22.javascript.pages.academy/keksobooking', // отправляем json сюда
     {
       method: 'POST',
       body,
@@ -65,4 +76,4 @@ getData();
 
 
 
-export { sendData };
+export { sendData, offerss, createListOffers };
