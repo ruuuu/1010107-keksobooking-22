@@ -1,11 +1,8 @@
 import { clearFields } from './forma.js';
-import { createListOffers } from './map.js';
+import { createListOffers, recreateMarker } from './map.js';
 import { showAlert } from './util.js';
-import { recreateMarker } from './map.js';
-import { setTypeHouseClick  } from './forma.js';
 
-import { sortOffers }  from './similar-list.js';
-
+let offerss = [];
 
 const getData = () => {
 
@@ -26,14 +23,16 @@ const getData = () => {
     })
     .then((offers) => { // передаем список серверных объявлений [{},{},{}]
       //console.log('offers ', offers);
+      offerss = offers; // серверные объявления
+
       createListOffers(offers); // вызов функции
 
-      const copyOffersList = offers.slice(); //  копия списка оферов
-      const sortList = copyOffersList.sort(sortOffers); // отсортированный список оферов
-      const sortListOffers = sortList.slice(0, 10); //
-      //console.log('sortListSlice ', sortListSlice );
 
-      setTypeHouseClick(() => createListOffers(sortListOffers)); // передаем  отсортрованный список оферов
+      // const filteredListOffers = getFiltredOffers(offers); // отфильтрованный список оферов
+      // console.log('filteredListOffers ', filteredListOffers);
+
+      //setTypeHouseClick(() => createListOffers(offers)); // передаем  отфильтрованный список оферов
+
     });
 
 };
@@ -77,4 +76,4 @@ getData();
 
 
 
-export { sendData };
+export { sendData, offerss, createListOffers };

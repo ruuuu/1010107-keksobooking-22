@@ -1,8 +1,4 @@
 
-const Default = { // значение по умолчанию для фильтра
-  TYPE_HOUSE: 'house',
-
-};
 
 //                                       ul
 const createFeatureElements = function (listOfFeatures, featuresArray) { // featuresArray =['wi-fi', 'wash', 'conditioner']
@@ -85,38 +81,38 @@ const createTypeElem = function(typeElem, offerType){
 // const similarOffers = createOffers(); // вызов функции, выдаст сгенеренные [{},{},{}]
 
 //ДОБАВИЛА
-const getOfferRank = (offerr) => { // передаем объект - offerr . определяем рейтинг у передаваемго офера
+// const getOfferRank = (offerr) => { // передаем объект - offerr . определяем рейтинг у передаваемго офера
 
-  const filtersForma = document.querySelector('.map__filters');
+//   const filtersForma = document.querySelector('.map__filters');
 
-  const typeSelect = filtersForma.querySelector('#housing-type'); // Тип жилья
+//   const typeSelect = filtersForma.querySelector('#housing-type'); // Тип жилья
 
-  typeSelect.value = offerr.offer.type; // запоминаем что выбрали из списка
+//   typeSelect.value = offerr.offer.type; // запоминаем что выбрали из списка
 
-  let rank = 0; // у всех объявлений сперва рейтинг =0
+//   let rank = 0; // у всех объявлений сперва рейтинг =0
 
-  //console.log('в getOfferRank typeSelect.value = ',  typeSelect.value);
-  if (offerr.offer.type === (typeSelect.value || Default.TYPE_HOUSE)) { // если у объявлеия тип равен  с тем что выбрали в фильтре
-    rank += 2; // за совпадение по Типу жилья, даем 2 очка
-  }
+//   //console.log('в getOfferRank typeSelect.value = ',  typeSelect.value);
+//   if (offerr.offer.type === (typeSelect.value || Default.TYPE_HOUSE)) { // если у объявлеия тип равен  с тем что выбрали в фильтре
+//     rank += 2; // за совпадение по Типу жилья, даем 2 очка
+//   }
 
-  //console.log('rank ', rank);
-  return rank; // возвращаем rank offerr
-};
+//   //console.log('rank ', rank);
+//   return rank; // возвращаем rank offerr
+// };
 
 
-// фукнция компаратор, получает два офера, передаем ее в sort как колбэк
-const sortOffers = (offerA, offerB) => {
-  const rankA = getOfferRank(offerA); // получаем рейтинг офераА
+// // фукнция компаратор, получает два офера, передаем ее в sort как колбэк
+// const sortOffers = (offerA, offerB) => {
+//   const rankA = getOfferRank(offerA); // получаем рейтинг офераА
 
-  //console.log('offerA = ', offerA, 'rankA =', rankA);
+//   //console.log('offerA = ', offerA, 'rankA =', rankA);
 
-  const rankB = getOfferRank(offerB); // получаем рейтинг офераВ
-  //console.log('offerB = ', offerB, 'rankB =', rankB);
+//   const rankB = getOfferRank(offerB); // получаем рейтинг офераВ
+//   //console.log('offerB = ', offerB, 'rankB =', rankB);
 
-  //console.log('rankB - rankA = ', rankB - rankA);
-  return rankB - rankA; // -1 или  1 или  0
-};
+//   //console.log('rankB - rankA = ', rankB - rankA);
+//   return rankB - rankA; // -1 или  1 или  0
+// };
 
 
 
@@ -175,7 +171,7 @@ const sortOffers = (offerA, offerB) => {
 
 
 
-export { createFeatureElements, createPhotoElements, createTypeElem, sortOffers };
+export { createFeatureElements, createPhotoElements, createTypeElem };
 
 
 

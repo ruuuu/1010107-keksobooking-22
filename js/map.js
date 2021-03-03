@@ -4,7 +4,7 @@ import { onEscKeyPress,  onMouseDownPress } from './modal.js';
 
 document.removeEventListener('keydown', onEscKeyPress); // снимаем обработчик когда нет сообщеий
 document.removeEventListener('mousedown',  onMouseDownPress); // снимаем обработчик когда нет сообщеий
-
+let arrayPinmarkers = [];
 
 /* global L:readonly */
 const map = L.map('map-canvas') //создали карту , нашли ее по id
@@ -61,8 +61,12 @@ const createCustomPopup = (offer_elem) => { // передаем объект-о�
 
 // const similarOffers = createOffers(); //  выдаст [{},{},{}]
 
+
+
 //привязка балуна к метке:
 const createListOffers = (offers) => { // передаем серверные объявления, в fetch вызываем ее
+
+  arrayPinmarkers = [];
 
   //console.log('offers = ', offers);
   // [{},{},{}] берем с  сервера
@@ -86,11 +90,22 @@ const createListOffers = (offers) => { // передаем серверные о
     );
 
     pinMarker.addTo(map);  // добавляем обычную метку на карту
+
+
     //                      offer
     pinMarker.bindPopup(createCustomPopup(elem)); // передаем {author, offer, location}, при нажатии на метку, вернет разметку объявления
+    arrayPinmarkers.push(pinMarker);
 
   }); // forEach()
 
+};
+
+
+
+const removePinMarkers = () => {
+
+  arrayPinmarkers.forEach((pin) => pin.remove())
+  arrayPinmarkers = [];
 };
 
 
@@ -116,7 +131,6 @@ const mainPinMarker = L.marker(  // создаем главную метку
 
 mainPinMarker.addTo(map);
 addressField.value = '35.70, 139.425';  // нач значение, центр токио
-
 
 
 mainPinMarker.addEventListener('dragstart', (evt) => { //  срабатывает в момент начала перетаскивания
@@ -152,4 +166,4 @@ const recreateMarker = () => {
 
 
 
-export { createListOffers, recreateMarker };
+export { createListOffers, recreateMarker, removePinMarkers};
