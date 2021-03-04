@@ -6,5 +6,5 @@ import './map.js';
 import './modal.js';
 import './forma.js';
 import './api.js';
-
+import './filter.js';
 

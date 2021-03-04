@@ -1,8 +1,12 @@
+/* global _:readonly */
 import { clearFields } from './forma.js';
 import { createListOffers, recreateMarker } from './map.js';
 import { showAlert } from './util.js';
+import { setTypeHouseClick } from './filter.js';
 
-let offerss = [];
+const RERENDER_DELAY = 500; // 500 мс полсекунда
+
+
 
 const getData = () => {
 
@@ -23,15 +27,10 @@ const getData = () => {
     })
     .then((offers) => { // передаем список серверных объявлений [{},{},{}]
       //console.log('offers ', offers);
-      offerss = offers; // серверные объявления
 
       createListOffers(offers); // вызов функции
 
-
-      // const filteredListOffers = getFiltredOffers(offers); // отфильтрованный список оферов
-      // console.log('filteredListOffers ', filteredListOffers);
-
-      //setTypeHouseClick(() => createListOffers(offers)); // передаем  отфильтрованный список оферов
+      setTypeHouseClick(_.debounce(() => createListOffers(offers)), RERENDER_DELAY); // передаем  отфильтрованный список оферов
 
     });
 
@@ -76,4 +75,4 @@ getData();
 
 
 
-export { sendData, offerss, createListOffers };
+export { sendData, createListOffers };
