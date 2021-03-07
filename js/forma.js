@@ -1,18 +1,13 @@
-import { sendData, offerss } from './api.js';
+import { sendData } from './api.js';
 import { successAlert, errorAlert } from './modal.js';
-import { recreateMarker, createListOffers} from './map.js';
-import { removePinMarkers} from './map.js';
+import { recreateMarker } from './map.js';
+
 
 const MIN_PRICES =  {
   'bungalow': 0,
   'flat': 1000,
   'house': 5000,
   'palace': 10000,
-};
-
-const Default = { // значение по умолчанию для фильтра
-  TYPE_HOUSE: 'any',
-
 };
 
 
@@ -45,10 +40,6 @@ const selectCapacity = forma.querySelector('#capacity'); // Список Кол-
 const descriptionField = forma.querySelector('#description'); // Описание
 
 const featuresFields = forma.querySelectorAll('.feature__checkbox'); // список чекбоксов
-
-const filtersForma = document.querySelector('.map__filters');
-
-const typeSelect = filtersForma.querySelector('#housing-type'); //Фильтер Тип жилья
 
 
 addressField.readOnly = true; // нередактируемое поле
@@ -287,48 +278,6 @@ const clearFields = () => {
 
 
 
-
-
-
-const checkType = (offerr) => { // передаем объявление
-  //console.log('typeSelect.value из checkType', typeSelect.value);
-  return typeSelect.value === Default.TYPE_HOUSE ? true : typeSelect.value === offerr.offer.type;
-};
-
-
-const getFiltredOffers = (offers) => { // передаем исходный список,  возвращает отфильрованный массив
-
-  //console.log('зашли в getFiltredOffers, offers =',  offers);
-
-  const filteredOffers = offers.filter((offerr) => { // получаем отсортированный массив
-    return checkType(offerr); // вернет только те элемент на котрых checkType(advert) вернет true
-  });
-
-  //console.log('filteredOffers ', filteredOffers);
-
-  return filteredOffers.slice(0, 10); // 10 объявлений только
-};
-
-
-
-
-
-//const setTypeHouseClick = (сb) => { //при выборе Тип жилья, будет вызываться cb() = createListOffers(sortListSlice)
-
-typeSelect.addEventListener('change', (evt) => {
-  //debugger;
-  removePinMarkers();
-  //console.log('нажали на список');
-  typeSelect.value = evt.target.value; // сохраняем то, что выбрали из списка
-  //console.log('typeSelect.value = ', typeSelect.value); // 'flat'
-
-  const mas = getFiltredOffers(offerss); //получаем отсортиорванный массив, перелаем серверные оферы
-  createListOffers(mas);
-  //сb(); // вызваем createListOffers(sortListOffers)
-});
-//};
-
-
 const setUserFormSubmit = () => {
 
   forma.addEventListener('submit', (evt) => {
@@ -354,6 +303,6 @@ setUserFormSubmit();
 
 
 
-export { toggledForms, setUserFormSubmit, forma, clearFields, addressField,  getFiltredOffers };
+export { toggledForms, setUserFormSubmit, forma, clearFields, addressField };
 
 

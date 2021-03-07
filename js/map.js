@@ -1,10 +1,11 @@
 import { createFeatureElements, createPhotoElements, createTypeElem } from './similar-list.js';
 import { addressField } from './forma.js';
 import { onEscKeyPress,  onMouseDownPress } from './modal.js';
+import { getFiltredOffers } from './filter.js';
 
 document.removeEventListener('keydown', onEscKeyPress); // снимаем обработчик когда нет сообщеий
 document.removeEventListener('mousedown',  onMouseDownPress); // снимаем обработчик когда нет сообщеий
-let arrayPinmarkers = [];
+let arrayPinMarkers = [];
 
 /* global L:readonly */
 const map = L.map('map-canvas') //создали карту , нашли ее по id
@@ -66,11 +67,15 @@ const createCustomPopup = (offer_elem) => { // передаем объект-о�
 //привязка балуна к метке:
 const createListOffers = (offers) => { // передаем серверные объявления, в fetch вызываем ее
 
-  arrayPinmarkers = [];
+  arrayPinMarkers = [];
 
-  //console.log('offers = ', offers);
+  const filteredOffers = getFiltredOffers(offers); // получаем отфильтроанные оферы
+
+  //console.log('filteredOffers = ', filteredOffers);
+
   // [{},{},{}] берем с  сервера
-  offers.forEach((elem) => { // передаем объект elem = {author, offer, location}
+  //offers
+  filteredOffers.forEach((elem) => { // передаем объект elem = {author, offer, location}
     const { location } = elem;
 
     const pinIcon = L.icon({ // создаем иконку для обычной метки
@@ -92,9 +97,9 @@ const createListOffers = (offers) => { // передаем серверные о
     pinMarker.addTo(map);  // добавляем обычную метку на карту
 
 
-    //                      offer
+    //                    разметка offer
     pinMarker.bindPopup(createCustomPopup(elem)); // передаем {author, offer, location}, при нажатии на метку, вернет разметку объявления
-    arrayPinmarkers.push(pinMarker);
+    arrayPinMarkers.push(pinMarker);
 
   }); // forEach()
 
@@ -104,8 +109,8 @@ const createListOffers = (offers) => { // передаем серверные о
 
 const removePinMarkers = () => {
 
-  arrayPinmarkers.forEach((pin) => pin.remove())
-  arrayPinmarkers = [];
+  arrayPinMarkers.forEach((pin) => pin.remove())
+  arrayPinMarkers = []; // список меток пустой
 };
 
 
