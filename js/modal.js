@@ -42,28 +42,25 @@ const onMouseDownPress = () => {
 
 
 
-const successAlert = () => { // сообщение об успехе
+const successAlert = () => {
 
   const successTemplate = document.querySelector('#success').content;
-  const successMessage = successTemplate.querySelector('.success'); //успешное  сообщение
+  const successMessage = successTemplate.querySelector('.success');
   const successElement = successMessage.cloneNode(true);
 
-  mainElement.append(successElement); // дбоавляем сообщеие в mainElement
+  mainElement.append(successElement);
 
-  document.addEventListener('keydown', onEscKeyPress); // нажатие на esc в соообщении
-  document.addEventListener('mousedown',  onMouseDownPress); // нажатие на любую область в соообщении
-
+  document.addEventListener('keydown', onEscKeyPress);
+  document.addEventListener('mousedown',  onMouseDownPress);
 
   setTimeout(() => {
-    successElement.remove(); // убираем сообщение
-  }, 4000); // на 4 сек показывает сообщение
-
-
+    successElement.remove();
+  }, 4000);
 
 };
 
 
-const errorAlert = () => { // если данные не загрузились, показываем сообщение с ошибкой
+const errorAlert = () => {
 
   const errorTemplate = document.querySelector('#error').content;
   const errorMessage = errorTemplate.querySelector('.error');
@@ -71,9 +68,9 @@ const errorAlert = () => { // если данные не загрузились,
 
   mainElement.append(errorElement);
 
-  const retryButton = errorElement.querySelector('.error__button'); //кнопка Попробовать снова в сообщение с ошибкой
+  const retryButton = errorElement.querySelector('.error__button');
 
-  retryButton.addEventListener('click', () => { // обработчик на Попробовать снова
+  retryButton.addEventListener('click', () => {
 
     errorElement.classList.add('hidden');
   });
@@ -86,7 +83,6 @@ const errorAlert = () => { // если данные не загрузились,
   setTimeout(() => {
     errorElement.remove();
   }, 4000);
-
 
 };
 

@@ -1,4 +1,4 @@
-const getFloatRandomNumber = function (min, max, countDigits) { // рандомное вещественное число с countDigits знаками после запятой
+const getFloatRandomNumber = function (min, max, countDigits) {
   let maxNumber = max;
   let minNumber = min;
 

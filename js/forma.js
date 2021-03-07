@@ -11,88 +11,73 @@ const MIN_PRICES =  {
 };
 
 
-const forma = document.querySelector('.ad-form'); // форма
+const forma = document.querySelector('.ad-form');
 
-const priceField = forma.querySelector('#price'); // поле Цена за ночь
+const priceField = forma.querySelector('#price');
 
-const selectType = forma.querySelector('#type'); //  список Тип жилья
+const selectType = forma.querySelector('#type');
 
-const selectCheckIn = forma.querySelector('#timein'); // список Заезд
+const selectCheckIn = forma.querySelector('#timein');
 
-const selectCheckOut = forma.querySelector('#timeout'); // список Выезд
+const selectCheckOut = forma.querySelector('#timeout');
 
 const fieldsets = forma.querySelectorAll('fieldset');
 
-const filters = document.querySelector('.map__filters'); // форма с фильтрами
+const filters = document.querySelector('.map__filters');
 
-const filterFeatures = filters.querySelector('.map__features'); // ['wash', 'conditioner', '']
+const filterFeatures = filters.querySelector('.map__features');
 
-const addressField = forma.querySelector('#address'); // поле Адрес
+const addressField = forma.querySelector('#address');
 
-const titleField = forma.querySelector('#title'); //название офера
+const titleField = forma.querySelector('#title');
 
-//const submitButton = forma.querySelector('.ad-form__submit');
+const selectRoomsNumber = forma.querySelector('#room_number');
 
-const selectRoomsNumber = forma.querySelector('#room_number'); // Список Кол-во комнат
+const selectCapacity = forma.querySelector('#capacity');
 
-const selectCapacity = forma.querySelector('#capacity'); // Список Кол-во гостей(мест)
+const descriptionField = forma.querySelector('#description');
 
-const descriptionField = forma.querySelector('#description'); // Описание
-
-const featuresFields = forma.querySelectorAll('.feature__checkbox'); // список чекбоксов
+const featuresFields = forma.querySelectorAll('.feature__checkbox');
 
 
-addressField.readOnly = true; // нередактируемое поле
-
-// нач состояние
+addressField.readOnly = true;
 priceField.setAttribute('placeholder', MIN_PRICES['flat']);
 priceField.setAttribute('min', MIN_PRICES['flat']);
-
-
-//нач состояние:
 selectCapacity.options[0].disabled = true;
 selectCapacity.options[1].disabled = true;
 selectCapacity.options[3].disabled = true;
 
 
 
-//состояние:
-const toggledForms = () => {
-  forma.classList.toggle('ad-form--disabled'); //  если  у формы есть класс, то его убирает, если нет, то добавляет
 
-  fieldsets.forEach((fieldset) => { // пройдемся по всем fieldset
+const toggledForms = () => {
+  forma.classList.toggle('ad-form--disabled');
+
+  fieldsets.forEach((fieldset) => {
     fieldset.disabled = !fieldset.disabled;
     //console.log('fieldset.disabled ', fieldset.disabled);
   });
 
-  //console.log(filters.childNodes);// вернет список дочерних дом эл-ов
 
-  filters.childNodes.forEach((filter) => { // проходимся по всем выпад спискам
+  filters.childNodes.forEach((filter) => {
     filter.disabled = !filter.disabled;
   });
 
 
-  //console.log(filterFeatures.childNodes);
+  //console.log(filterFeatures.childNodes); // фичи в фильтрах
   filterFeatures.childNodes.forEach((feature) => {
     feature.disabled = !feature.disabled;
   });
 }
 
 
-// const isFormaActive = () => {
-//   const elemForma  = forma.classList.contains('ad-form--disabled');
-//   return !(elemForma); //если содержит класс, то  false
-// };
-
-
-
-const onValidateCountRooms = (evt) => { // фукнция обработчик для колва комнат
-  selectCapacity.options[0].disabled = false; // раздизейбливаем предыдущие значения
+const onValidateCountRooms = (evt) => {
+  selectCapacity.options[0].disabled = false;
   selectCapacity.options[1].disabled = false;
   selectCapacity.options[2].disabled = false;
   selectCapacity.options[3].disabled = false;
 
-  if(evt.target.value === '1'){ // если выбрали 1 команта, ind=0
+  if(evt.target.value === '1'){
     //console.log('выбрала значение ', evt.target.value);
     selectCapacity.options[0].disabled = true;
     selectCapacity.options[1].disabled = true;
@@ -100,19 +85,19 @@ const onValidateCountRooms = (evt) => { // фукнция обработчик �
   }
 
 
-  if(evt.target.value === '2'){ // если выбрали 2 команты, ind=1
+  if(evt.target.value === '2'){
     selectCapacity.options[0].disabled = true;
     selectCapacity.options[3].disabled = true;
   }
 
 
-  if(evt.target.value === '3'){ // если выбрали 3 команты, ind=2
+  if(evt.target.value === '3'){
     selectCapacity.options[3].disabled = true;
     //console.log('длина списка ', selectCapacity.options.length);
   }
 
 
-  if(evt.target.value === '100'){ // если выбрали 100 комант, ind=3
+  if(evt.target.value === '100'){
     selectCapacity.options[0].disabled = true;
     selectCapacity.options[1].disabled = true;
     selectCapacity.options[2].disabled = true;
@@ -124,31 +109,31 @@ const onValidateCountRooms = (evt) => { // фукнция обработчик �
 
 
 
-const onValidateCountGuests = (evt) => { //фукнция-обработчки для списка Кол-во гостей
+const onValidateCountGuests = (evt) => {
   //selectCapacity.value = evt.target.value;
   //console.log('selectCapacity.value = ' , selectCapacity.value);
 
-  selectRoomsNumber.options[0].disabled = false; // раздизейбливаем предыдущие значения
+  selectRoomsNumber.options[0].disabled = false;
   selectRoomsNumber.options[1].disabled = false;
   selectRoomsNumber.options[2].disabled = false;
   selectRoomsNumber.options[3].disabled = false;
 
-  if(evt.target.value === '3'){ // если выбрали 3 гостей
+  if(evt.target.value === '3'){
     selectRoomsNumber.options[0].disabled = true;
     selectRoomsNumber.options[1].disabled = true;
     selectRoomsNumber.options[3].disabled = true;
   }
 
-  if(evt.target.value === '2'){ // если выбрали 2 гостей
+  if(evt.target.value === '2'){
     selectRoomsNumber.options[0].disabled = true;
     selectRoomsNumber.options[3].disabled = true;
   }
 
-  if(evt.target.value === '1'){ // если выбрали 1 гостя
+  if(evt.target.value === '1'){
     selectRoomsNumber.options[3].disabled = true;
   }
 
-  if(evt.target.value === '0'){ // если выбрали Не для гостей
+  if(evt.target.value === '0'){
     selectRoomsNumber.options[0].disabled = true;
     selectRoomsNumber.options[1].disabled = true;
     selectRoomsNumber.options[2].disabled = true;
@@ -157,43 +142,41 @@ const onValidateCountGuests = (evt) => { //фукнция-обработчки �
 
 
 
-const onValidateTitleField = () => { // функция обработчика, для поля Название отеля
-  //console.log(titleField.validity);
+const onValidateTitleField = () => {
+  //console.log('titleField.validity = ', titleField.validity);
 
   if (titleField.validity.tooShort) {
     titleField.classList.add('border_for-error');
-    //titleField.style.borderColor = 'green';
-    titleField.setCustomValidity('Имя должно состоять минимум из 30-ти символов'); // отобразит наше сообщение вместо штатного
+    titleField.setCustomValidity('Имя должно состоять минимум из 30-ти символов');
   }
   else if (titleField.validity.tooLong) {
     titleField.classList.add('border_for-error');
     titleField.setCustomValidity('Имя не должно превышать 100 символов');
   }
-  else if (titleField.validity.valueMissing) { // если не заполнили поле
+  else if (titleField.validity.valueMissing) {
     titleField.classList.add('border_for-error');
     titleField.setCustomValidity('Обязательное поле');
 
   }
-  else {
-    titleField.setCustomValidity(''); // сбрасываем ошибку, когда уже ввели корреткное значение
-    titleField.classList.remove('border_for-error');
-  }
+  titleField.setCustomValidity('');
+  titleField.classList.remove('border_for-error');
+
 };
 
 
-const onValidateSelectType = (evt) => { // фкнуия обработчик Тип жилья
+const onValidateSelectType = (evt) => {
   //console.log(evt.target); // выведет разметку списка
   //console.log(evt.target.value); // <option value="flat"> </option>само значение 'flat' , 'house', 'washer'
 
   priceField.setAttribute('max', '1000000');
-  priceField.value = ''; // очищаем от предыдущего значения
-  priceField.setAttribute('min', MIN_PRICES[evt.target.value]); // MIN_PRICES['flat']
+  priceField.value = '';
+  priceField.setAttribute('min', MIN_PRICES[evt.target.value]);
   priceField.setAttribute('placeholder', MIN_PRICES[evt.target.value]);
 };
 
 
 
-const onValidatePriceField = () => { // фукнция обработчкиа для поля Цена
+const onValidatePriceField = () => {
   //console.log('MIN_PRICES[flat] = ', MIN_PRICES['flat']);
 
   if(priceField.value < MIN_PRICES['bungalow']){
@@ -224,52 +207,51 @@ const onValidatePriceField = () => { // фукнция обработчкиа д
 
 
 
-titleField.addEventListener('invalid', onValidateTitleField); //событие произойдет если в  поле ввели некорретное значние после того как нажмешь на кноку Отправить
+titleField.addEventListener('invalid', onValidateTitleField);
 
-selectType.addEventListener('change', onValidateSelectType);  // Тип жилья
+selectType.addEventListener('change', onValidateSelectType);
 
-priceField.addEventListener('invalid', onValidatePriceField); // вешаем обработчик на поле Цена
+priceField.addEventListener('invalid', onValidatePriceField);
 
-selectRoomsNumber.addEventListener('change', onValidateCountRooms); //  вешаем обработчик на список Кол-во комнат
+selectRoomsNumber.addEventListener('change', onValidateCountRooms);
 
-selectCapacity.addEventListener('change', onValidateCountGuests); // вешаем обработчик на список Кол-во гостей
+selectCapacity.addEventListener('change', onValidateCountGuests);
 
-selectCheckIn.addEventListener('change', (evt) => { // вешаем обработчик на список Заезд
+selectCheckIn.addEventListener('change', (evt) => {
   selectCheckOut.value = evt.target.value;
 });
 
-selectCheckOut.addEventListener('change', (evt) => { // вешаем обработчик на список Выезд
+selectCheckOut.addEventListener('change', (evt) => {
   selectCheckIn.value = evt.target.value;
 });
 
 
 const clearFields = () => {
 
-  titleField.value = ''; // очищаем
+  titleField.value = '';
 
-  selectType.options[1].selected = true; // Квартира
-  // нач состояние
+  selectType.options[1].selected = true;
   priceField.setAttribute('placeholder', '1000');
-  priceField.setAttribute('min', MIN_PRICES['flat']); // MIN_PRICES['flat']
+  priceField.setAttribute('min', MIN_PRICES['flat']);
   priceField.value = '';
 
-  selectRoomsNumber.options[0].selected = true; // 1 комната
-  selectCapacity.options[2].selected = true; // на 1 гостя
+  selectRoomsNumber.options[0].selected = true;
+  selectCapacity.options[2].selected = true;
 
-  selectCheckIn.options[0].selected = true; // 12:00
-  selectCheckOut.options[0].selected = true; // 12:00
+  selectCheckIn.options[0].selected = true;
+  selectCheckOut.options[0].selected = true;
   descriptionField.value = '';
 
-  featuresFields.forEach((feature) => { // снимам галочки с чекбоксов
+  featuresFields.forEach((feature) => {
     feature.checked = false;
   })
 
-  selectRoomsNumber.options[0].disabled = false; // раздизейбливаем предыдущие значения
+  selectRoomsNumber.options[0].disabled = false;
   selectRoomsNumber.options[1].disabled = false;
   selectRoomsNumber.options[2].disabled = false;
   selectRoomsNumber.options[3].disabled = false;
 
-  selectCapacity.options[0].disabled = false; // раздизейбливаем предыдущие значения
+  selectCapacity.options[0].disabled = false;
   selectCapacity.options[1].disabled = false;
   selectCapacity.options[2].disabled = false;
   selectCapacity.options[3].disabled = false;
@@ -282,7 +264,7 @@ const setUserFormSubmit = () => {
 
   forma.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    //вызов функции:
+
     sendData(
       () => successAlert(),
       () => errorAlert(),
@@ -292,17 +274,19 @@ const setUserFormSubmit = () => {
 };
 
 
-forma.addEventListener('reset', () => { // Нажатие на кноку Очистить
+forma.addEventListener('reset', () => {
   //console.log('нажали на кнопку сброса');
-  clearFields(); // очистка полей
+  clearFields();
   recreateMarker();
 });
 
+
+toggledForms();
+
 setUserFormSubmit();
-//toggledForms();
 
 
 
-export { toggledForms, setUserFormSubmit, forma, clearFields, addressField };
+export { toggledForms,  setUserFormSubmit, forma, clearFields, addressField };
 
 

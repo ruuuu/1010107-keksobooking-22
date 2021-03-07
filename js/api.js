@@ -1,37 +1,42 @@
 /* global _:readonly */
-import { clearFields } from './forma.js';
-import { createListOffers, recreateMarker } from './map.js';
+import { createListOffers, recreateMarker , map} from './map.js';
 import { showAlert } from './util.js';
-import { setTypeHouseClick } from './filter.js';
+import { setTypeClick } from './filter.js';
+import { toggledForms, clearFields } from './forma.js';
 
-const RERENDER_DELAY = 500; // 500 мс полсекунда
+const RERENDER_DELAY = 500;
+
 
 
 
 const getData = () => {
 
-  fetch('https://22.javascript.pages.academy/keksobooking/data?limit=100') // сервер
+
+  fetch('https://22.javascript.pages.academy/keksobooking/data?limit=100')
+
     .then((response) => {
       //console.log('response = ', response);
-      if(response.ok) {  // если ответ пришел
+      if(response.ok) {
         //console.log('Данные получены с сервера');
-        return response.json(); // получиили список объектов с сервера [{},{},{},{}]
+
+        if(response){
+          toggledForms();
+        }
+        return response.json();
       }
       else {
-        //console.log('Данные  НЕ получены с сервера'); // вызов фукнции
+        //console.log('Данные  НЕ получены с сервера');
+        map.remove();
         showAlert('Ошибка загрузки данных. Попробуйте снова');
       }
     })
     .catch(() => {
       showAlert('С сервера пришли необъявления, попробуйте обратиться к бэкенду');
     })
-    .then((offers) => { // передаем список серверных объявлений [{},{},{}]
-      //console.log('offers ', offers);
-
-      createListOffers(offers); // вызов функции
-
-      setTypeHouseClick(_.debounce(() => createListOffers(offers)), RERENDER_DELAY); // передаем  отфильтрованный список оферов
-
+    .then((offers) => {
+      //console.log('offers ', offers.slice(0, 10));
+      createListOffers(offers.slice(0, 10));
+      setTypeClick(_.debounce(() => createListOffers(offers)), RERENDER_DELAY);
     });
 
 };
@@ -42,37 +47,36 @@ const getData = () => {
 
 const sendData = (successAlert, errorAlert, body) => {
 
-  // для отправки формы метод POST:
   fetch(
-    'https://22.javascript.pages.academy/keksobooking', // отправляем json сюда
+    'https://22.javascript.pages.academy/keksobooking',
     {
       method: 'POST',
       body,
-      // тип multipart/form-data
     },
   )
-    .then((response) => { // объект
+    .then((response) => {
       //console.log('response', response);
       //console.log('response.json() ', response.json());
       if (response.ok) {
         successAlert();
-        clearFields(); // чисти поля
-        recreateMarker(); // возвращаем метку на место
+        clearFields();
+        recreateMarker();
       }
       else {
         errorAlert();
       }
       return response.json();
     })
-    .catch(() => { //err при ошибке отрпавки данных
+    .catch(() => {
       //console.log(err);
       showAlert('Не удалось отправить форму. Попробуйте ещё раз');
     });
-
 };
+
+
 
 getData();
 
 
 
-export { sendData, createListOffers };
+export { sendData };

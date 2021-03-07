@@ -1,22 +1,11 @@
 
-
-//                                       ul
-const createFeatureElements = function (listOfFeatures, featuresArray) { // featuresArray =['wi-fi', 'wash', 'conditioner']
-  //1-ый способ:
+const createFeatureElements = function (listOfFeatures, featuresArray) {
   if (featuresArray.length){
-    const features__array = featuresArray.map((feature) => `<li class="popup__feature popup__feature--${feature}"></li>`); // [<li></li>, <li></li>, <li></li>]
-    listOfFeatures.insertAdjacentHTML('beforeend', features__array.join(' ')); // строка  из элементов массива "<li></li> <li></li> <li></li>" и добавляем в родитель
+    const features__array = featuresArray.map((feature) => `<li class="popup__feature popup__feature--${feature}"></li>`);
+    listOfFeatures.insertAdjacentHTML('beforeend', features__array.join(' '));
   }
-  //2-ой способ:
-  // if (featuresArray.length) {
-  //   featuresArray.forEach((elem) => {
-  //     const featureElement = document.createElement('li');
-  //     featureElement.classList.add('popup__feature', 'popup__feature--' + elem);
-  //     listOfFeatures.appendChild(featureElement);  //добавляем li в ul
-  //   });
-  // }
   else {
-    listOfFeatures.classList.add('hidden'); // скроем
+    listOfFeatures.classList.add('hidden');
   }
 };
 
@@ -25,14 +14,14 @@ const createFeatureElements = function (listOfFeatures, featuresArray) { // feat
 const createPhotoElements = function (listOfPhotos, photosArray) {
 
   if (photosArray.length) {
-    photosArray.forEach((photo) => { // функция вызывается  к каждому photo
+    photosArray.forEach((photo) => {
       const photoElement = document.createElement('img');
       photoElement.classList.add('popup__photo');
-      photoElement.setAttribute('src', photo); //добавляем атрибут
+      photoElement.setAttribute('src', photo);
       photoElement.setAttribute('width', '45');
       photoElement.setAttribute('height', '40');
       photoElement.setAttribute('alt', 'Фотография жилья');
-      listOfPhotos.appendChild(photoElement);  //добавляем img в родитель listOfPhotos
+      listOfPhotos.appendChild(photoElement);
     });
   }
   else{
