@@ -1,4 +1,4 @@
-const getFloatRandomNumber = function (min, max, countDigits) { // рандомное вещественное число с countDigits знаками после запятой
+const getFloatRandomNumber = function (min, max, countDigits) {
   let maxNumber = max;
   let minNumber = min;
 
@@ -22,10 +22,10 @@ const getFloatRandomNumber = function (min, max, countDigits) { // рандом�
 
 
 
-const randomInteger = function (max) { // для генерации целого числа от [0,max]
-  return Math.floor(Math.random() * Math.floor(max)) + 1; // [1, max]
+const randomInteger = function (max) {
+  return Math.floor(Math.random() * Math.floor(max)) + 1;
 };
-//console.log('случайное целое число равно', randomInteger(6)); // вернет [1,6]
+//console.log('случайное целое число равно', randomInteger(6));
 
 
 
