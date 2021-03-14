@@ -13,19 +13,17 @@ const getFloatRandomNumber = function (min, max, countDigits) {
 
   let n = (Math.random() * (maxNumber - minNumber) + minNumber).toFixed(countDigits);
 
-  //console.log('typeof(n)', typeof (n)); // instanceof()
-  //console.log('typeof(n)', typeof (+n));
-  return n; //строка
+  return n;
 
 };
-//console.log(getFloatRandomNumber(35.65000, 35.70000, 5));
+
 
 
 
 const randomInteger = function (max) {
   return Math.floor(Math.random() * Math.floor(max)) + 1;
 };
-//console.log('случайное целое число равно', randomInteger(6));
+
 
 
 

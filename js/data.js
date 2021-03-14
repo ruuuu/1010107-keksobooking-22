@@ -22,7 +22,7 @@ const OFFER_PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'htt
 
 const DeleteRepeatElemsFromArray = (mas) => {
 
-  //console.log('mas ', mas);
+
   let mas1 = [];
 
   mas1[0] = mas[0];
@@ -45,29 +45,24 @@ const DeleteRepeatElemsFromArray = (mas) => {
 
   return mas1;
 };
-//console.log(DeleteRepeatElemsFromArray(["wifi", "washer", "parking", "dishwasher"]));
 
 
-const createFeaturesArray = (array) => { // созадем массив строк
+
+const createFeaturesArray = (array) => {
 
   let mas = [];
-  let countElems = randomInteger(array.length); //[1,6]
-  //console.log('countElems', countElems);
+  let countElems = randomInteger(array.length);
+
 
   for (let i = 0; i < countElems; i++) {
-    //console.log('randomInteger(OFFER_FEATURES.length)  equal', randomInteger(OFFER_FEATURES.length));
-    mas[i] = array[randomInteger(array.length) - 1]; // индекк [1,6]
+
+    mas[i] = array[randomInteger(array.length) - 1];
   }
 
-  //console.log('mas', mas);
-
   let mas1 = DeleteRepeatElemsFromArray(mas);
-
-  //mas1 = mas1.join(', '); //чтоб элементы не слипались, строка
-
   return mas1;
 };
-//console.log('result', createFeaturesArray(OFFER_FEATURES));
+
 
 
 const createAuthorOffer = () => {
@@ -75,10 +70,10 @@ const createAuthorOffer = () => {
     avatar: 'img/avatars/user0' + randomInteger(8) + '.png',
   };
 };
-//console.log(createAuthorOffer());
 
 
-const createInfoOffer = () => {  //offer:{}
+
+const createInfoOffer = () => {
   return {
     title: OFFER_TITLE[randomInteger(OFFER_TITLE.length - 1)],
     address: getFloatRandomNumber(5.90, 45.90, 3) + ', ' + getFloatRandomNumber(1.90, 10.90, 3),
@@ -88,22 +83,22 @@ const createInfoOffer = () => {  //offer:{}
     guests: randomInteger(6),
     checkin: OFFER_CHECK_IN[randomInteger(OFFER_CHECK_IN.length - 1)],
     checkout: OFFER_CHECK_OUT[randomInteger(OFFER_CHECK_OUT.length - 1)],
-    features: createFeaturesArray(OFFER_FEATURES), //массив строк
+    features: createFeaturesArray(OFFER_FEATURES),
     description: 'Описание помещения',
-    photos: createFeaturesArray(OFFER_PHOTOS), //массив строк
+    photos: createFeaturesArray(OFFER_PHOTOS),
 
   };
 };
-//console.log(createInfoOffer());
+
 
 
 const createLocationOffer = () => {
   return {
-    x: +getFloatRandomNumber(35.65000, 35.70000, 5), // оператор + приводит строку к числу
+    x: +getFloatRandomNumber(35.65000, 35.70000, 5),
     y: +getFloatRandomNumber(139.70000, 139.80000, 5),
   };
 };
-//console.log(createLocationOffer());
+
 
 
 const createOffer = () => {
@@ -113,12 +108,12 @@ const createOffer = () => {
     location: createLocationOffer(),
   };
 };
-//console.log(createOffer());
+
 
 
 const createOffers = () => new Array(COUNT_OFFERS).fill(null).map(() => createOffer());
 
-//console.log('массив объявлений ', createOffers());
+
 
 
 

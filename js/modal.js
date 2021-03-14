@@ -9,8 +9,6 @@ const isEscEvent = (evt) => {
 const onEscKeyPress = (evt) => {
 
   if (isEscEvent(evt)) {
-    //console.log('нажали клавишу esc');
-
     evt.preventDefault();
 
     const successElement = document.querySelector('.success');
@@ -27,7 +25,6 @@ const onEscKeyPress = (evt) => {
 
 
 const onMouseDownPress = () => {
-  //console.log('нажали на ппоизвольню область');
   const errorElement = document.querySelector('.error');
   const successElement = document.querySelector('.success');
 

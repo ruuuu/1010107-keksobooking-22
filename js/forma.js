@@ -10,6 +10,12 @@ const MIN_PRICES =  {
   'palace': 10000,
 };
 
+const RoomsCount = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0],
+};
 
 const forma = document.querySelector('.ad-form');
 
@@ -40,12 +46,38 @@ const descriptionField = forma.querySelector('#description');
 const featuresFields = forma.querySelectorAll('.feature__checkbox');
 
 
-addressField.readOnly = true;
-priceField.setAttribute('placeholder', MIN_PRICES['flat']);
-priceField.setAttribute('min', MIN_PRICES['flat']);
-selectCapacity.options[0].disabled = true;
-selectCapacity.options[1].disabled = true;
-selectCapacity.options[3].disabled = true;
+
+
+const init = () => {
+
+  addressField.readOnly = true;
+  titleField.value = '';
+  selectType.options[1].selected = true;
+  priceField.setAttribute('placeholder', MIN_PRICES['flat']);
+  priceField.setAttribute('min', MIN_PRICES['flat']);
+  priceField.value = '';
+
+  selectRoomsNumber.options[0].selected = true;
+  selectCapacity.options[2].selected = true;
+
+  selectCheckIn.options[0].selected = true;
+  selectCheckOut.options[0].selected = true;
+  descriptionField.value = '';
+
+  featuresFields.forEach((feature) => {
+    feature.checked = false;
+  });
+
+  for(let i = 0;  i < selectRoomsNumber.length; i++){
+    selectRoomsNumber.options[i].disabled = false;
+  }
+
+  for(let i = 0;  i < selectCapacity.length; i++){
+    if(i !== 2){
+      selectCapacity.options[i].disabled = true;
+    }
+  }
+};
 
 
 
@@ -67,36 +99,24 @@ const toggledForms = () => {
 }
 
 
+const disableСapacityOptions = (value) => {
+
+  const capacityOptions = selectCapacity.querySelectorAll('option');
+
+  capacityOptions.forEach((option) => {
+    option.disabled = true;
+  });
+
+  RoomsCount[value].forEach( (option) => {
+    selectCapacity.querySelector('option' + '[value="' + option + '"]').disabled = false;
+  });
+};
+
+
+
 const onValidateCountRooms = (evt) => {
-  selectCapacity.options[0].disabled = false;
-  selectCapacity.options[1].disabled = false;
-  selectCapacity.options[2].disabled = false;
-  selectCapacity.options[3].disabled = false;
 
-  if(evt.target.value === '1'){
-    //console.log('выбрала значение ', evt.target.value);
-    selectCapacity.options[0].disabled = true;
-    selectCapacity.options[1].disabled = true;
-    selectCapacity.options[3].disabled = true;
-  }
-
-
-  if(evt.target.value === '2'){
-    selectCapacity.options[0].disabled = true;
-    selectCapacity.options[3].disabled = true;
-  }
-
-
-  if(evt.target.value === '3'){
-    selectCapacity.options[3].disabled = true;
-  }
-
-
-  if(evt.target.value === '100'){
-    selectCapacity.options[0].disabled = true;
-    selectCapacity.options[1].disabled = true;
-    selectCapacity.options[2].disabled = true;
-  }
+  disableСapacityOptions(evt.target.value);
 
 };
 
@@ -106,30 +126,38 @@ const onValidateCountRooms = (evt) => {
 
 const onValidateCountGuests = (evt) => {
 
-  selectRoomsNumber.options[0].disabled = false;
-  selectRoomsNumber.options[1].disabled = false;
-  selectRoomsNumber.options[2].disabled = false;
-  selectRoomsNumber.options[3].disabled = false;
-
-  if(evt.target.value === '3'){
-    selectRoomsNumber.options[0].disabled = true;
-    selectRoomsNumber.options[1].disabled = true;
-    selectRoomsNumber.options[3].disabled = true;
+  for(let i = 0;  i < selectRoomsNumber.length; i++){
+    selectRoomsNumber.options[i].disabled = false;
   }
 
-  if(evt.target.value === '2'){
-    selectRoomsNumber.options[0].disabled = true;
-    selectRoomsNumber.options[3].disabled = true;
-  }
+  switch(evt.target.value) {
+    case '3':
+      for(let i = 0;  i < selectRoomsNumber.length; i++){
+        if (i !== 2){
+          selectRoomsNumber.options[i].disabled = true;
+        }
+      }
+      break;
 
-  if(evt.target.value === '1'){
-    selectRoomsNumber.options[3].disabled = true;
-  }
+    case '2':
+      for(let i = 0;  i < selectRoomsNumber.length; i++){
+        if (i === 0 ||  i === 3){
+          selectRoomsNumber.options[i].disabled = true;
+        }
+      }
+      break;
 
-  if(evt.target.value === '0'){
-    selectRoomsNumber.options[0].disabled = true;
-    selectRoomsNumber.options[1].disabled = true;
-    selectRoomsNumber.options[2].disabled = true;
+    case '1':
+      selectRoomsNumber.options[3].disabled = true;
+      break;
+
+    case '0':
+      for(let i = 0;  i < selectRoomsNumber.length; i++){
+        if (i !== 3){
+          selectRoomsNumber.options[i].disabled = true;
+        }
+      }
+      break;
   }
 };
 
@@ -166,21 +194,16 @@ const onValidateSelectType = (evt) => {
 
 const onValidatePriceField = () => {
 
-
   if(priceField.value < MIN_PRICES['bungalow']){
     priceField.classList.add('border_for-error');
-    //priceField.setCustomValidity('цена не должна быть меньше 0');
   }
   else if(priceField.value < MIN_PRICES['float']){
-    //priceField.setCustomValidity('цена не должна быть меньше 1000');
     priceField.classList.add('border_for-error');
   }
   else if(priceField.value < MIN_PRICES['house']){
-    //priceField.setCustomValidity('цена не должна быть меньше 5000');
     priceField.classList.add('border_for-error');
   }
   else if(priceField.value < MIN_PRICES['palace']){
-    //priceField.setCustomValidity('цена не должна быть меньше 10000');
     priceField.classList.add('border_for-error');
   }
   else if(priceField.validity.valueMissing) {
@@ -205,9 +228,11 @@ selectRoomsNumber.addEventListener('change', onValidateCountRooms);
 
 selectCapacity.addEventListener('change', onValidateCountGuests);
 
+
 selectCheckIn.addEventListener('change', (evt) => {
   selectCheckOut.value = evt.target.value;
 });
+
 
 selectCheckOut.addEventListener('change', (evt) => {
   selectCheckIn.value = evt.target.value;
@@ -215,35 +240,7 @@ selectCheckOut.addEventListener('change', (evt) => {
 
 
 const clearFields = () => {
-
-  titleField.value = '';
-
-  selectType.options[1].selected = true;
-  priceField.setAttribute('placeholder', '1000');
-  priceField.setAttribute('min', MIN_PRICES['flat']);
-  priceField.value = '';
-
-  selectRoomsNumber.options[0].selected = true;
-  selectCapacity.options[2].selected = true;
-
-  selectCheckIn.options[0].selected = true;
-  selectCheckOut.options[0].selected = true;
-  descriptionField.value = '';
-
-  featuresFields.forEach((feature) => {
-    feature.checked = false;
-  })
-
-  selectRoomsNumber.options[0].disabled = false;
-  selectRoomsNumber.options[1].disabled = false;
-  selectRoomsNumber.options[2].disabled = false;
-  selectRoomsNumber.options[3].disabled = false;
-
-  selectCapacity.options[0].disabled = false;
-  selectCapacity.options[1].disabled = false;
-  selectCapacity.options[2].disabled = false;
-  selectCapacity.options[3].disabled = false;
-
+  init();
 };
 
 
@@ -257,6 +254,7 @@ const setUserFormSubmit = () => {
       () => errorAlert(),
       new FormData(evt.target),
     );
+
   });
 };
 
@@ -267,8 +265,8 @@ forma.addEventListener('reset', () => {
 });
 
 
+init();
 toggledForms();
-
 setUserFormSubmit();
 
 

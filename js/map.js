@@ -4,8 +4,7 @@ import { onEscKeyPress,  onMouseDownPress } from './modal.js';
 import { getFiltredOffers } from './filter.js';
 
 
-document.removeEventListener('keydown', onEscKeyPress);
-document.removeEventListener('mousedown',  onMouseDownPress);
+
 let arrayPinMarkers = [];
 
 
@@ -15,14 +14,14 @@ const map = L.map('map-canvas')
 
 map.on('load', () => {
 
-  //console.log('карта загружена');
-
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
   ).addTo(map)
+  document.removeEventListener('keydown', onEscKeyPress);
+  document.removeEventListener('mousedown',  onMouseDownPress);
 })
 
 
@@ -153,6 +152,7 @@ mainPinMarker.addEventListener('dragend', (evt) => {
 const recreateMarker = () => {
   mainPinMarker.setLatLng({lat: 35.70, lng: 139.425});
   addressField.value = `${mainPinMarker.getLatLng().lat}, ${mainPinMarker.getLatLng().lng}`;
+
 };
 
 

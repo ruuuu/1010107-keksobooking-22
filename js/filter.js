@@ -19,7 +19,6 @@ const featuresSelect = filtersForma.querySelector('#housing-features');
 
 
 const checkType = (offerr) => {
-
   return typeSelect.value === ANY_VALUE ? true : typeSelect.value === offerr.offer.type;
 };
 
@@ -56,7 +55,7 @@ const checkGuests = (offerr) => {
 };
 
 
-const checkFeatures = (offerr) => {
+const checkFeatures = (offerr) => { //
   let isCorrectFeatures = true;
   const features = featuresSelect.querySelectorAll('input:checked');
 
@@ -77,7 +76,7 @@ const getFiltredOffers = (offers) => {
     return checkType(offerr) && checkPrice(offerr) && checkRooms(offerr) && checkGuests(offerr) && checkFeatures(offerr);
   });
 
-  return filteredOffers.slice(0, 10); // 10 объявлений только
+  return filteredOffers.slice(0, 10);
 };
 
 
