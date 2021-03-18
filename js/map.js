@@ -147,7 +147,7 @@ mainPinMarker.addEventListener('dragend', (evt) => {
 });
 
 
-const recreateMarker = () => { // ставим метку в изначальное место
+const recreateMarker = () => {
   mainPinMarker.setLatLng({lat: 35.70, lng: 139.425});
   addressField.value = `${mainPinMarker.getLatLng().lat}, ${mainPinMarker.getLatLng().lng}`;
 
