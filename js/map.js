@@ -3,25 +3,23 @@ import { addressField } from './forma.js';
 import { onEscKeyPress,  onMouseDownPress } from './modal.js';
 import { getFiltredOffers } from './filter.js';
 
-
-
 let arrayPinMarkers = [];
 
 
 
-/* global L:readonly */
-const map = L.map('map-canvas')
 
+const map = window.L.map('map-canvas')
 map.on('load', () => {
 
-  L.tileLayer(
+  window.L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
   ).addTo(map)
+
   document.removeEventListener('keydown', onEscKeyPress);
-  document.removeEventListener('mousedown',  onMouseDownPress);
+  document.removeEventListener('mousedown', onMouseDownPress);
 })
 
 
@@ -38,32 +36,32 @@ map.setView({
 
 
 
-const createCustomPopup = (offer_elem) => {
+const createCustomPopup = (offerElem) => {
 
   const cardTemplate = document.querySelector('#card').content;
   const card = cardTemplate.querySelector('.map__card');
 
   const offerElement = card.cloneNode(true);
 
-  offerElement.querySelector('.popup__title').textContent = offer_elem.offer.title;
+  offerElement.querySelector('.popup__title').textContent = offerElem.offer.title;
 
-  offerElement.querySelector('.popup__text--address').textContent = offer_elem.offer.address;
+  offerElement.querySelector('.popup__text--address').textContent = offerElem.offer.address;
 
-  offerElement.querySelector('.popup__text--price').textContent = +(offer_elem.offer.price) + ' ₽/ночь';
+  offerElement.querySelector('.popup__text--price').textContent = +(offerElem.offer.price) + ' ₽/ночь';
 
-  offerElement.querySelector('.popup__type').textContent = createTypeElem(offerElement.querySelector('.popup__type'), offer_elem.offer.type);
+  offerElement.querySelector('.popup__type').textContent = createTypeElem(offerElement.querySelector('.popup__type'), offerElem.offer.type);
 
-  offerElement.querySelector('.popup__text--capacity').textContent = offer_elem.offer.rooms + ' комнаты для ' + offer_elem.offer.guests + ' гостей';
+  offerElement.querySelector('.popup__text--capacity').textContent = offerElem.offer.rooms + ' комнаты для ' + offerElem.offer.guests + ' гостей';
 
-  offerElement.querySelector('.popup__text--time').textContent = 'Заезд после ' +  offer_elem.offer.checkin + ', выезд до  ' + offer_elem.offer.checkout;
+  offerElement.querySelector('.popup__text--time').textContent = 'Заезд после ' +  offerElem.offer.checkin + ', выезд до  ' + offerElem.offer.checkout;
 
-  createFeatureElements(offerElement.querySelector('.popup__features'), offer_elem.offer.features);
+  createFeatureElements(offerElement.querySelector('.popup__features'), offerElem.offer.features);
 
-  offerElement.querySelector('.popup__description').textContent = offer_elem.offer.description;
+  offerElement.querySelector('.popup__description').textContent = offerElem.offer.description;
 
-  createPhotoElements(offerElement.querySelector('.popup__photos'), offer_elem.offer.photos);
+  createPhotoElements(offerElement.querySelector('.popup__photos'), offerElem.offer.photos);
 
-  offerElement.querySelector('.popup__avatar').setAttribute('src', offer_elem.author.avatar);
+  offerElement.querySelector('.popup__avatar').setAttribute('src', offerElem.author.avatar);
 
   return offerElement;
 
@@ -79,13 +77,13 @@ const createListOffers = (offers) => {
   filteredOffers.forEach((elem) => {
     const { location } = elem;
 
-    const pinIcon = L.icon({
+    const pinIcon = window.L.icon({
       iconUrl: '../img/pin.svg',
       iconSize: [26, 26],
       iconAnchor: [13, 26],
     });
 
-    const pinMarker = L.marker(
+    const pinMarker = window.L.marker(
       {
         lat: location.lat,
         lng: location.lng,
@@ -113,14 +111,14 @@ const removePinMarkers = () => {
 
 
 
-const mainPinIcon = L.icon({
+const mainPinIcon = window.L.icon({
   iconUrl: '../img/main-pin.svg',
   iconSize: [60, 60],
   iconAnchor: [30, 60],
 });
 
 
-const mainPinMarker = L.marker(
+const mainPinMarker = window.L.marker(
   {
     lat: 35.70,
     lng: 139.425,
@@ -149,7 +147,7 @@ mainPinMarker.addEventListener('dragend', (evt) => {
 });
 
 
-const recreateMarker = () => {
+const recreateMarker = () => { // ставим метку в изначальное место
   mainPinMarker.setLatLng({lat: 35.70, lng: 139.425});
   addressField.value = `${mainPinMarker.getLatLng().lat}, ${mainPinMarker.getLatLng().lng}`;
 

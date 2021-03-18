@@ -39,7 +39,7 @@ const onMouseDownPress = () => {
 
 
 
-const successAlert = () => {
+const sendSuccessAlert = () => { // successAlert()
 
   const successTemplate = document.querySelector('#success').content;
   const successMessage = successTemplate.querySelector('.success');
@@ -57,7 +57,7 @@ const successAlert = () => {
 };
 
 
-const errorAlert = () => {
+const sendErrorAlert = () => { // errorAlert
 
   const errorTemplate = document.querySelector('#error').content;
   const errorMessage = errorTemplate.querySelector('.error');
@@ -84,4 +84,4 @@ const errorAlert = () => {
 };
 
 
-export { successAlert, errorAlert, onEscKeyPress, onMouseDownPress };
+export { sendSuccessAlert, sendErrorAlert, onEscKeyPress, onMouseDownPress };

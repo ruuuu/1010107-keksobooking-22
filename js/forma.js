@@ -1,6 +1,8 @@
-import { sendData } from './api.js';
-import { successAlert, errorAlert } from './modal.js';
-import { recreateMarker } from './map.js';
+import { sendData, offersFromServer } from './api.js';
+import { sendSuccessAlert, sendErrorAlert } from './modal.js';
+import { recreateMarker, createListOffers } from './map.js';
+import { resetFilter } from './filter.js';
+
 
 
 const MIN_PRICES =  {
@@ -45,6 +47,8 @@ const descriptionField = forma.querySelector('#description');
 
 const featuresFields = forma.querySelectorAll('.feature__checkbox');
 
+const resetButton = forma.querySelector('.ad-form__reset');
+
 
 
 
@@ -58,7 +62,8 @@ const init = () => {
   priceField.value = '';
 
   selectRoomsNumber.options[0].selected = true;
-  selectCapacity.options[2].selected = true;
+  selectCapacity.options[2].selected = true; //
+  selectCapacity.options[2].disabled = false;
 
   selectCheckIn.options[0].selected = true;
   selectCheckOut.options[0].selected = true;
@@ -82,7 +87,7 @@ const init = () => {
 
 
 
-const toggledForms = () => {
+const activateForms = () => {
   forma.classList.toggle('ad-form--disabled');
 
   fieldsets.forEach((fieldset) => {
@@ -109,7 +114,10 @@ const disableСapacityOptions = (value) => {
 
   RoomsCount[value].forEach( (option) => {
     selectCapacity.querySelector('option' + '[value="' + option + '"]').disabled = false;
+    selectCapacity.value = option;
   });
+
+
 };
 
 
@@ -119,8 +127,6 @@ const onValidateCountRooms = (evt) => {
   disableСapacityOptions(evt.target.value);
 
 };
-
-
 
 
 
@@ -154,7 +160,7 @@ const onValidateCountGuests = (evt) => {
     case '0':
       for(let i = 0;  i < selectRoomsNumber.length; i++){
         if (i !== 3){
-          selectRoomsNumber.options[i].disabled = true;
+          selectRoomsNumber.options[i].disabled = false;
         }
       }
       break;
@@ -250,27 +256,34 @@ const setUserFormSubmit = () => {
   forma.addEventListener('submit', (evt) => {
     evt.preventDefault();
     sendData(
-      () => successAlert(),
-      () => errorAlert(),
+      () => sendSuccessAlert(),
+      () => sendErrorAlert(),
       new FormData(evt.target),
     );
-
+    resetFilter();
+    createListOffers(offersFromServer.slice(0, 10));
+    selectCapacity.options[2].disabled = false;
   });
+
 };
 
 
-forma.addEventListener('reset', () => {
+resetButton.addEventListener('click', () => {
+
   clearFields();
   recreateMarker();
+  resetFilter();
+  createListOffers(offersFromServer.slice(0, 10));
+
 });
 
 
 init();
-toggledForms();
+activateForms();
 setUserFormSubmit();
 
 
 
-export { toggledForms, setUserFormSubmit, forma, clearFields, addressField };
+export { activateForms, setUserFormSubmit, forma, clearFields, addressField };
 
 

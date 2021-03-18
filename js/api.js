@@ -1,12 +1,11 @@
-/* global _:readonly */
 import { createListOffers, recreateMarker , map} from './map.js';
 import { showAlert } from './util.js';
 import { setTypeClick } from './filter.js';
-import { toggledForms,  clearFields } from './forma.js';
+import { activateForms,  clearFields } from './forma.js';
 
 const RERENDER_DELAY = 500;
 const URL = 'https://22.javascript.pages.academy/keksobooking';
-
+let offersFromServer;
 
 const getData = () => {
 
@@ -15,7 +14,7 @@ const getData = () => {
     .then((response) => {
       if(response.ok) {
         if(response){
-          toggledForms();
+          activateForms();
         }
         return response.json();
       }
@@ -29,6 +28,7 @@ const getData = () => {
       showAlert('С сервера пришли необъявления, попробуйте обратиться к бэкенду');
     })
     .then((offers) => {
+      offersFromServer = offers;
       createListOffers(offers.slice(0, 10));
       setTypeClick(_.debounce(() => createListOffers(offers)), RERENDER_DELAY);
     });
@@ -39,7 +39,7 @@ const getData = () => {
 
 
 
-const sendData = (successAlert, errorAlert, body) => {
+const sendData = (sendSuccessAlert, sendErrorAlert, body) => {
 
   fetch(URL,
     {
@@ -49,12 +49,12 @@ const sendData = (successAlert, errorAlert, body) => {
   )
     .then((response) => {
       if (response.ok) {
-        successAlert();
+        sendSuccessAlert();
         clearFields();
         recreateMarker();
       }
       else {
-        errorAlert();
+        sendErrorAlert();
       }
       return response.json();
     })
@@ -67,4 +67,4 @@ getData();
 
 
 
-export { sendData };
+export { sendData, offersFromServer };

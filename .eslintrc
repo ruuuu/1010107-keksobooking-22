@@ -8,5 +8,8 @@ env:
   es2017: true
   browser: true
 
+globals:
+  "_": true
+
 extends:
   "htmlacademy/vanilla"

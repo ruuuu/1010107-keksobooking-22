@@ -1,10 +1,14 @@
 import { removePinMarkers } from './map.js';
 
 const ANY_VALUE = 'any';
+const MIN_PRICE = 10000;
+const MAX_PRICE = 50000;
 
 const filters = document.querySelector('.map__filters');
 
 const filtersForma = document.querySelector('.map__filters');
+
+const filterItems = filtersForma.querySelectorAll('select, input');
 
 const typeSelect = filtersForma.querySelector('#housing-type');
 
@@ -29,13 +33,13 @@ const checkPrice = (offerr) => {
   if (priceSelect.value !== ANY_VALUE) {
     switch (priceSelect.value) {
       case 'low':
-        isCorrectPrice = offerr.offer.price < 10000;
+        isCorrectPrice = offerr.offer.price < MIN_PRICE;
         break;
       case 'middle':
-        isCorrectPrice = offerr.offer.price >= 10000 && offerr.offer.price < 50000;
+        isCorrectPrice = offerr.offer.price >= MIN_PRICE && offerr.offer.price < MAX_PRICE;
         break;
       case 'high':
-        isCorrectPrice = offerr.offer.price >= 50000;
+        isCorrectPrice = offerr.offer.price >= MAX_PRICE;
     }
   }
 
@@ -80,6 +84,20 @@ const getFiltredOffers = (offers) => {
 };
 
 
+
+const resetFilter = () => {
+  filterItems.forEach(function (it) {
+    it.value = 'any';
+  });
+
+  let featuresItems = featuresSelect.querySelectorAll('input');
+
+  featuresItems.forEach(function (feature) {
+    feature.checked = false;
+  });
+};
+
+
 const setTypeClick = (сb) => {
 
   filters.addEventListener('change', () => {
@@ -91,4 +109,4 @@ const setTypeClick = (сb) => {
 };
 
 
-export { getFiltredOffers, setTypeClick };
+export { getFiltredOffers, setTypeClick, resetFilter };

@@ -1,10 +1,9 @@
 
 const createFeatureElements = function (listOfFeatures, featuresArray) {
   if (featuresArray.length){
-    const features__array = featuresArray.map((feature) => `<li class="popup__feature popup__feature--${feature}"></li>`);
-    listOfFeatures.insertAdjacentHTML('beforeend', features__array.join(' '));
+    const featureArray = featuresArray.map((feature) => `<li class="popup__feature popup__feature--${feature}"></li>`);
+    listOfFeatures.insertAdjacentHTML('beforeend', featureArray.join(' '));
   }
-
   else {
     listOfFeatures.classList.add('hidden');
   }

@@ -1,5 +1,4 @@
 import './util.js';
-import './data.js';
 import './similar-list.js';
 import './map.js';
 import './modal.js';
