@@ -1,8 +1,6 @@
 import { ff } from './forma.js';
 
-import { setTypeClick } from './filter.js';
-import { offersFromServer } from './api.js';
-import { createListOffers } from './map.js';
+
 
 const mainElement = document.querySelector('main');
 

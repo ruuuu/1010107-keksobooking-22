@@ -98,7 +98,7 @@ const createListOffers = (offers) => { // передаем серверные о
     pinMarker.bindPopup(createCustomPopup(elem)); // передаем {author, offer, location}, при нажатии на метку, вернет разметку объявления
     arrayPinMarkers.push(pinMarker); // отрисованную метку дбоавляем в массив arrayPinMarkers
 
-    console.log('arrayPinMarkers = ', arrayPinMarkers);
+    //console.log('arrayPinMarkers = ', arrayPinMarkers);
   });
 
 };
@@ -106,7 +106,7 @@ const createListOffers = (offers) => { // передаем серверные о
 
 
 const removePinMarkers = () => {
-  console.log('зашли в  removePinMarkers');
+  //console.log('зашли в  removePinMarkers');
   arrayPinMarkers.forEach((pin) => pin.remove()); //  удаляем метку
   arrayPinMarkers = [];
 };

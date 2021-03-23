@@ -1,6 +1,4 @@
-import { removePinMarkers, arrayPinMarkers } from './map.js';
-import {  createListOffers } from './map.js';
-import {  offersFromServer } from './api.js';
+import { removePinMarkers } from './map.js';
 
 const ANY_VALUE = 'any';
 const MIN_PRICE = 10000;
@@ -20,8 +18,7 @@ const guestsSelect = filters.querySelector('#housing-guests'); // список �
 
 const featuresSelect = filters.querySelector('#housing-features'); // контейнер для  фич (чекбоксы)
 
-const ch =  featuresSelect.querySelector('.map__checkbox');
-console.log('ch = ', ch);
+
 
 
 const checkType = (offerr) => {
@@ -65,7 +62,7 @@ const checkFeatures = (offerr) => { // фильтр фич, предаем об�
   let isCorrectFeatures = true;
   const features = featuresSelect.querySelectorAll('input:checked'); //в featuresSelect- контейнер для  фич (чекбоксы)
 
-  console.log('features = ', features); // [input#filter-wifi, input#filter-dishwasher, input#filter-parking]
+  //console.log('features = ', features); // [input#filter-wifi, input#filter-dishwasher, input#filter-parking]
 
   features.forEach((feature) => { //
     if (offerr.offer.features.indexOf(feature.value) === -1) {
@@ -79,13 +76,13 @@ const checkFeatures = (offerr) => { // фильтр фич, предаем об�
 
 
 const getFiltredOffers = (offers) => { // возвращает отфильтрованные оферы, вызваем этот метод в Map.js
-  console.log('фильтр');
+  //console.log('фильтр');
 
   const filteredOffers = offers.filter((offerr) => { // для каждого офера
     return checkType(offerr) && checkPrice(offerr) && checkRooms(offerr) && checkGuests(offerr) && checkFeatures(offerr);
   }); // возвращает отфильрованные оферы
 
-  console.log('filteredOffers ', filteredOffers);
+  //console.log('filteredOffers ', filteredOffers);
 
   return filteredOffers.slice(0, 10); // берем 10 штук
 };
@@ -112,7 +109,7 @@ const resetFilter = () => { // сброс фильтров
 const setTypeClick = (сb) => { // cb = () => createListOffers(offers)
 
   filters.addEventListener('change', () => { // обработчик нажатия фильтров
-    console.log('нажала на фильтр');
+    //console.log('нажала на фильтр');
 
     removePinMarkers(); // при перерисовки, старые метки удаляем
     сb();

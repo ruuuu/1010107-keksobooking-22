@@ -13,7 +13,7 @@ const getData = () => {
 
     .then((response) => {
       if(response.ok) {
-        console.log('response = ', response);
+        //console.log('response = ', response);
         if(response){
           activateForms();
         }

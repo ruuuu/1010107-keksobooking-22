@@ -1,9 +1,9 @@
-import { sendData, offersFromServer, getData } from './api.js';
+import { sendData, offersFromServer } from './api.js';
 import { sendSuccessAlert, sendErrorAlert } from './modal.js';
 import { recreateMarker, createListOffers, removePinMarkers, map } from './map.js';
-import { resetFilter, getFiltredOffers } from './filter.js';
-import { setTypeClick } from './filter.js';
-const RERENDER_DELAY = 500;
+import { resetFilter } from './filter.js';
+
+
 
 
 const MIN_PRICES =  {
@@ -266,15 +266,15 @@ const ff = () => {
 
   //ставим карту на место
   window.L.tileLayer(
-      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      },
-    ).addTo(map)
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map)
 
-    map.setView({
-      lat: 35.70, //  центр находится в тОкио
-      lng: 139.425,
+  map.setView({
+    lat: 35.70, //  центр находится в тОкио
+    lng: 139.425,
   }, 10);
 
 
