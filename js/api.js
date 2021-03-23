@@ -13,6 +13,7 @@ const getData = () => {
 
     .then((response) => {
       if(response.ok) {
+        console.log('response = ', response);
         if(response){
           activateForms();
         }
@@ -29,8 +30,9 @@ const getData = () => {
     })
     .then((offers) => {
       offersFromServer = offers;
-      createListOffers(offers.slice(0, 10));
-      setTypeClick(_.debounce(() => createListOffers(offers)), RERENDER_DELAY);
+      createListOffers(offersFromServer.slice(0, 10));
+      setTypeClick(_.debounce(() => createListOffers(offersFromServer)), RERENDER_DELAY); // перерисовывает метки
+
     });
 
 };
@@ -41,7 +43,7 @@ const getData = () => {
 
 const sendData = (sendSuccessAlert, sendErrorAlert, body) => {
 
-  fetch(URL,
+  fetch(URL, //+ '1',
     {
       method: 'POST',
       body,
@@ -67,4 +69,4 @@ getData();
 
 
 
-export { sendData, offersFromServer };
+export { sendData, offersFromServer, getData };

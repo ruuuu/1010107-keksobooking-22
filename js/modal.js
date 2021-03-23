@@ -1,3 +1,9 @@
+import { ff } from './forma.js';
+
+import { setTypeClick } from './filter.js';
+import { offersFromServer } from './api.js';
+import { createListOffers } from './map.js';
+
 const mainElement = document.querySelector('main');
 
 
@@ -49,6 +55,10 @@ const sendSuccessAlert = () => {
 
   document.addEventListener('keydown', onEscKeyPress);
   document.addEventListener('mousedown',  onMouseDownPress);
+
+  //---------------
+  ff();
+  //------------------
 
   setTimeout(() => {
     successElement.remove();

@@ -30,13 +30,13 @@ map.on('error', () => {
 
 
 map.setView({
-  lat: 35.70,
+  lat: 35.70, //  центр находится в тОкио
   lng: 139.425,
 }, 10);
 
 
 
-const createCustomPopup = (offerElem) => {
+const createCustomPopup = (offerElem) => { // передаем объект-объвление {author, offer, location} , создаем  разметку одного объявления
 
   const cardTemplate = document.querySelector('#card').content;
   const card = cardTemplate.querySelector('.map__card');
@@ -63,18 +63,18 @@ const createCustomPopup = (offerElem) => {
 
   offerElement.querySelector('.popup__avatar').setAttribute('src', offerElem.author.avatar);
 
-  return offerElement;
+  return offerElement; //  получили разметку  1-го объвления
 
 };
 
+//привязка балуна к метке:
+const createListOffers = (offers) => { // передаем серверные объявления, в fetch вызываем ее
 
-const createListOffers = (offers) => {
+  //arrayPinMarkers = [];
 
-  arrayPinMarkers = [];
+  const filteredOffers = getFiltredOffers(offers); // отфильтрованные оферы  возвращает
 
-  const filteredOffers = getFiltredOffers(offers);
-
-  filteredOffers.forEach((elem) => {
+  filteredOffers.forEach((elem) => { // проходимся по отфильтрованным оферам
     const { location } = elem;
 
     const pinIcon = window.L.icon({
@@ -93,10 +93,12 @@ const createListOffers = (offers) => {
       },
     );
 
-    pinMarker.addTo(map);
-    pinMarker.bindPopup(createCustomPopup(elem));
-    arrayPinMarkers.push(pinMarker);
+    pinMarker.addTo(map); //  добавляем обычную метку на карту
+    //                    разметка offer
+    pinMarker.bindPopup(createCustomPopup(elem)); // передаем {author, offer, location}, при нажатии на метку, вернет разметку объявления
+    arrayPinMarkers.push(pinMarker); // отрисованную метку дбоавляем в массив arrayPinMarkers
 
+    console.log('arrayPinMarkers = ', arrayPinMarkers);
   });
 
 };
@@ -104,8 +106,8 @@ const createListOffers = (offers) => {
 
 
 const removePinMarkers = () => {
-
-  arrayPinMarkers.forEach((pin) => pin.remove())
+  console.log('зашли в  removePinMarkers');
+  arrayPinMarkers.forEach((pin) => pin.remove()); //  удаляем метку
   arrayPinMarkers = [];
 };
 
@@ -156,4 +158,4 @@ const recreateMarker = () => {
 
 
 
-export { createListOffers, recreateMarker, removePinMarkers, map };
+export { createListOffers, recreateMarker, removePinMarkers, map, arrayPinMarkers  };

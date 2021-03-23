@@ -1,8 +1,9 @@
-import { sendData, offersFromServer } from './api.js';
+import { sendData, offersFromServer, getData } from './api.js';
 import { sendSuccessAlert, sendErrorAlert } from './modal.js';
-import { recreateMarker, createListOffers } from './map.js';
-import { resetFilter } from './filter.js';
-
+import { recreateMarker, createListOffers, removePinMarkers, map } from './map.js';
+import { resetFilter, getFiltredOffers } from './filter.js';
+import { setTypeClick } from './filter.js';
+const RERENDER_DELAY = 500;
 
 
 const MIN_PRICES =  {
@@ -31,10 +32,6 @@ const selectCheckOut = forma.querySelector('#timeout');
 
 const fieldsets = forma.querySelectorAll('fieldset');
 
-const filters = document.querySelector('.map__filters');
-
-const filterFeatures = filters.querySelector('.map__features');
-
 const addressField = forma.querySelector('#address');
 
 const titleField = forma.querySelector('#title');
@@ -50,11 +47,17 @@ const featuresFields = forma.querySelectorAll('.feature__checkbox');
 const resetButton = forma.querySelector('.ad-form__reset');
 
 
+//для фильтров, здесб для раздизейбливаня:
+const filters = document.querySelector('.map__filters'); //  форма с фильтрами
+
+const filterFeatures = filters.querySelector('.map__features'); // контейнер для фич [input, input, input, input, input, input]
 
 
-const init = () => {
 
-  addressField.readOnly = true;
+
+const init = () => { //начальное состояние полей
+
+  addressField.readOnly = true; // только для чтения
   titleField.value = '';
   selectType.options[1].selected = true;
   priceField.setAttribute('placeholder', MIN_PRICES['flat']);
@@ -82,6 +85,8 @@ const init = () => {
       selectCapacity.options[i].disabled = true;
     }
   }
+
+
 };
 
 
@@ -94,11 +99,11 @@ const activateForms = () => {
     fieldset.disabled = !fieldset.disabled;
   });
 
-  filters.childNodes.forEach((filter) => {
+  filters.childNodes.forEach((filter) => { // раздизейбливаем
     filter.disabled = !filter.disabled;
   });
 
-  filterFeatures.childNodes.forEach((feature) => {
+  filterFeatures.childNodes.forEach((feature) => { // фильтр с фичами
     feature.disabled = !feature.disabled;
   });
 }
@@ -247,35 +252,69 @@ selectCheckOut.addEventListener('change', (evt) => {
 
 const clearFields = () => {
   init();
+
 };
 
 
+const ff = () => {
 
-const setUserFormSubmit = () => {
+  resetFilter();  // сброс фильтров
+  removePinMarkers(); // при перерисовки, старые метки удаляем
 
-  forma.addEventListener('submit', (evt) => {
+  createListOffers(offersFromServer);
+
+
+  //ставим карту на место
+  window.L.tileLayer(
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      },
+    ).addTo(map)
+
+    map.setView({
+      lat: 35.70, //  центр находится в тОкио
+      lng: 139.425,
+  }, 10);
+
+
+};
+
+
+const setUserFormSubmit = () => { //
+
+  forma.addEventListener('submit', (evt) => { // кнопка Отправить
     evt.preventDefault();
     sendData(
-      () => sendSuccessAlert(),
+      () => sendSuccessAlert(), //  здесь вызываем ff()
       () => sendErrorAlert(),
       new FormData(evt.target),
     );
-    resetFilter();
-    createListOffers(offersFromServer.slice(0, 10));
+
     selectCapacity.options[2].disabled = false;
+    clearFields(); // очищает поля
+    recreateMarker(); //  ставит метку  на исходное место
+
   });
+
+
 
 };
 
 
-resetButton.addEventListener('click', () => {
+resetButton.addEventListener('click', () => { // кнопка Очистить
 
-  clearFields();
-  recreateMarker();
-  resetFilter();
-  createListOffers(offersFromServer.slice(0, 10));
+  clearFields(); // очищает поля
+  recreateMarker(); //  ставит метку  на исходное место
+
+  ff();
 
 });
+
+
+
+
+
 
 
 init();
@@ -284,6 +323,6 @@ setUserFormSubmit();
 
 
 
-export { activateForms, setUserFormSubmit, forma, clearFields, addressField };
+export { activateForms,  forma, clearFields, addressField, ff };
 
 
