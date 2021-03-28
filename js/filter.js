@@ -4,20 +4,20 @@ const ANY_VALUE = 'any';
 const MIN_PRICE = 10000;
 const MAX_PRICE = 50000;
 
-const filters = document.querySelector('.map__filters'); //  форма с фильтрами
+const filters = document.querySelector('.map__filters');
 
-const filterItems = filters.querySelectorAll('select, input'); // [ select, select, select, select, input, input, input, input]
+const filterItems = filters.querySelectorAll('select, input');
 
-const typeSelect = filters.querySelector('#housing-type'); // список Тип жилья
+const typeSelect = filters.querySelector('#housing-type');
 
-const priceSelect = filters.querySelector('#housing-price'); // список Цены
+const priceSelect = filters.querySelector('#housing-price');
 
-const roomsSelect = filters.querySelector('#housing-rooms'); // список колво комнат
+const roomsSelect = filters.querySelector('#housing-rooms');
 
-const guestsSelect = filters.querySelector('#housing-guests'); // список число готсей
+const guestsSelect = filters.querySelector('#housing-guests');
 
-const featuresSelect = filters.querySelector('#housing-features'); // контейнер для  фич (чекбоксы)
-
+const featuresSelect = filters.querySelector('#housing-features');
+//
 
 
 
@@ -58,11 +58,10 @@ const checkGuests = (offerr) => {
 };
 
 
-const checkFeatures = (offerr) => { // фильтр фич, предаем объект
+const checkFeatures = (offerr) => {
   let isCorrectFeatures = true;
-  const features = featuresSelect.querySelectorAll('input:checked'); //в featuresSelect- контейнер для  фич (чекбоксы)
+  const features = featuresSelect.querySelectorAll('input:checked');
 
-  //console.log('features = ', features); // [input#filter-wifi, input#filter-dishwasher, input#filter-parking]
 
   features.forEach((feature) => { //
     if (offerr.offer.features.indexOf(feature.value) === -1) {
@@ -75,29 +74,28 @@ const checkFeatures = (offerr) => { // фильтр фич, предаем об�
 };
 
 
-const getFiltredOffers = (offers) => { // возвращает отфильтрованные оферы, вызваем этот метод в Map.js
-  //console.log('фильтр');
+const getFiltredOffers = (offers) => {
 
-  const filteredOffers = offers.filter((offerr) => { // для каждого офера
+
+  const filteredOffers = offers.filter((offerr) => {
     return checkType(offerr) && checkPrice(offerr) && checkRooms(offerr) && checkGuests(offerr) && checkFeatures(offerr);
-  }); // возвращает отфильрованные оферы
+  });
 
-  //console.log('filteredOffers ', filteredOffers);
 
-  return filteredOffers.slice(0, 10); // берем 10 штук
+  return filteredOffers.slice(0, 10);
 };
 
 
 
-const resetFilter = () => { // сброс фильтров
+const resetFilter = () => {
 
-  filterItems.forEach((item) => { //  [select, select, select, select, input, input, input, input, input]
+  filterItems.forEach((item) => {
     item.value = 'any';
   });
 
-  let featuresItems = featuresSelect.querySelectorAll('input'); // фичи
+  let featuresItems = featuresSelect.querySelectorAll('input');
 
-  featuresItems.forEach((feature) => { // фичи,  [input, input, input, input, input]
+  featuresItems.forEach((feature) => {
     feature.checked = false;
   });
 
@@ -106,13 +104,13 @@ const resetFilter = () => { // сброс фильтров
 };
 
 
-const setTypeClick = (сb) => { // cb = () => createListOffers(offers)
+const setTypeClick = (сb) => {
 
-  filters.addEventListener('change', () => { // обработчик нажатия фильтров
-    //console.log('нажала на фильтр');
+  filters.addEventListener('change', () => {
 
-    removePinMarkers(); // при перерисовки, старые метки удаляем
+    removePinMarkers();
     сb();
+
 
   });
 

@@ -47,17 +47,17 @@ const featuresFields = forma.querySelectorAll('.feature__checkbox');
 const resetButton = forma.querySelector('.ad-form__reset');
 
 
-//для фильтров, здесб для раздизейбливаня:
-const filters = document.querySelector('.map__filters'); //  форма с фильтрами
 
-const filterFeatures = filters.querySelector('.map__features'); // контейнер для фич [input, input, input, input, input, input]
+const filters = document.querySelector('.map__filters');
 
-
+const filterFeatures = filters.querySelector('.map__features');
 
 
-const init = () => { //начальное состояние полей
 
-  addressField.readOnly = true; // только для чтения
+
+const init = () => {
+
+  addressField.readOnly = true;
   titleField.value = '';
   selectType.options[1].selected = true;
   priceField.setAttribute('placeholder', MIN_PRICES['flat']);
@@ -99,7 +99,7 @@ const activateForms = () => {
     fieldset.disabled = !fieldset.disabled;
   });
 
-  filters.childNodes.forEach((filter) => { // раздизейбливаем
+  filters.childNodes.forEach((filter) => {
     filter.disabled = !filter.disabled;
   });
 
@@ -258,13 +258,11 @@ const clearFields = () => {
 
 const ff = () => {
 
-  resetFilter();  // сброс фильтров
-  removePinMarkers(); // при перерисовки, старые метки удаляем
+  resetFilter();
+  removePinMarkers();
 
   createListOffers(offersFromServer);
 
-
-  //ставим карту на место
   window.L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
@@ -283,17 +281,17 @@ const ff = () => {
 
 const setUserFormSubmit = () => { //
 
-  forma.addEventListener('submit', (evt) => { // кнопка Отправить
+  forma.addEventListener('submit', (evt) => {
     evt.preventDefault();
     sendData(
-      () => sendSuccessAlert(), //  здесь вызываем ff()
+      () => sendSuccessAlert(),
       () => sendErrorAlert(),
       new FormData(evt.target),
     );
 
     selectCapacity.options[2].disabled = false;
-    clearFields(); // очищает поля
-    recreateMarker(); //  ставит метку  на исходное место
+    clearFields();
+    recreateMarker();
 
   });
 
@@ -304,8 +302,8 @@ const setUserFormSubmit = () => { //
 
 resetButton.addEventListener('click', () => { // кнопка Очистить
 
-  clearFields(); // очищает поля
-  recreateMarker(); //  ставит метку  на исходное место
+  clearFields();
+  recreateMarker();
 
   ff();
 

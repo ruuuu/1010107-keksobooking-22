@@ -3,7 +3,7 @@ import { addressField } from './forma.js';
 import { onEscKeyPress,  onMouseDownPress } from './modal.js';
 import { getFiltredOffers } from './filter.js';
 
-let arrayPinMarkers = [];
+let arrayPinMarkers;
 
 
 
@@ -36,7 +36,7 @@ map.setView({
 
 
 
-const createCustomPopup = (offerElem) => { // передаем объект-объвление {author, offer, location} , создаем  разметку одного объявления
+const createCustomPopup = (offerElem) => {
 
   const cardTemplate = document.querySelector('#card').content;
   const card = cardTemplate.querySelector('.map__card');
@@ -63,18 +63,18 @@ const createCustomPopup = (offerElem) => { // передаем объект-об
 
   offerElement.querySelector('.popup__avatar').setAttribute('src', offerElem.author.avatar);
 
-  return offerElement; //  получили разметку  1-го объвления
+  return offerElement;
 
 };
 
 //привязка балуна к метке:
-const createListOffers = (offers) => { // передаем серверные объявления, в fetch вызываем ее
+const createListOffers = (offers) => {
 
-  //arrayPinMarkers = [];
+  arrayPinMarkers = [];
 
-  const filteredOffers = getFiltredOffers(offers); // отфильтрованные оферы  возвращает
+  const filteredOffers = getFiltredOffers(offers);
 
-  filteredOffers.forEach((elem) => { // проходимся по отфильтрованным оферам
+  filteredOffers.forEach((elem) => {
     const { location } = elem;
 
     const pinIcon = window.L.icon({
@@ -93,12 +93,12 @@ const createListOffers = (offers) => { // передаем серверные о
       },
     );
 
-    pinMarker.addTo(map); //  добавляем обычную метку на карту
-    //                    разметка offer
-    pinMarker.bindPopup(createCustomPopup(elem)); // передаем {author, offer, location}, при нажатии на метку, вернет разметку объявления
-    arrayPinMarkers.push(pinMarker); // отрисованную метку дбоавляем в массив arrayPinMarkers
+    pinMarker.addTo(map);
 
-    //console.log('arrayPinMarkers = ', arrayPinMarkers);
+    pinMarker.bindPopup(createCustomPopup(elem));
+    arrayPinMarkers.push(pinMarker);
+
+
   });
 
 };
@@ -107,7 +107,7 @@ const createListOffers = (offers) => { // передаем серверные о
 
 const removePinMarkers = () => {
   //console.log('зашли в  removePinMarkers');
-  arrayPinMarkers.forEach((pin) => pin.remove()); //  удаляем метку
+  arrayPinMarkers.forEach((pin) => pin.remove());
   arrayPinMarkers = [];
 };
 
@@ -152,7 +152,6 @@ mainPinMarker.addEventListener('dragend', (evt) => {
 const recreateMarker = () => {
   mainPinMarker.setLatLng({lat: 35.70, lng: 139.425});
   addressField.value = `${mainPinMarker.getLatLng().lat}, ${mainPinMarker.getLatLng().lng}`;
-
 };
 
 
